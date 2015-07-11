@@ -1,6 +1,6 @@
 ﻿title:            Zack 的博客
 description:      Zhang Ke的博客
-disqus_shortname: hpstrtheme
+duoshuo_shortname: qt4
 reading_time:     true
 words_per_minute: 200
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
@@ -50,6 +50,11 @@ permalink:   /:categories/:title/
 
 # Amount of post to show on home page
 paginate: 5
+
+comments :
+    provider : duoshuo
+    duoshuo : 
+      short_name : qt4
 
 kramdown:
   auto_ids: true
