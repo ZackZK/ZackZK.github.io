@@ -2,7 +2,7 @@
 layout: post
 title: mongodb从excel中导入数据
 description: "从excel导入数据到mongodb中"
-modified: 2015-07-15
+modified: 2015-07-21
 tags: [mongodb]
 ---
 
@@ -51,6 +51,42 @@ options:
 connected to: 127.0.0.1
 Wed Apr 10 13:26:12 imported 60 objects
 {% endhighlight %}
+
+# update on 2015/07/21
+**mongoimport 导入数据时的数据类型问题**
+在使用mongoimport可以很方便的导入需要的数据，但是导入之后会发现数字型的值都会自动变为数值类型， 即使使用引号将其括起来。这对于代码出来来说，十分不方便。
+[stack overflow的讨论](http://stackoverflow.com/questions/24223443/mongoimport-choosing-field-type)
+
+一种方法，可以通过下面的python代码将csv文件读入，然后转换成自己想要的格式，将其写入mongodb。注意：需要[PyMongo](http://api.mongodb.org/python/current/)支持。
+
+{% highlight python%}
+import os
+import csv
+
+class MyType:
+    def __init__(self, type, value):
+        self.type = type
+        self.value = value
+
+mongodb_link = 'mongodb://127.0.0.1:27017'
+mongoClient = MongoClient(mongodb_link)
+db = mongoClient.mytype_infos
+
+def write_mongoDB(mytype):
+    db.mytype_info.insert(mytype.__dict__)
+
+with open('xxxx.csv') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        one = MyType(type=int(row['type']),
+                     value=float(row['value']))
+        write_mongoDB(one)
+{% endhighlight %}
+
+        
+    
+    
+
 
 
 
