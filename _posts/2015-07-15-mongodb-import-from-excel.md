@@ -52,7 +52,7 @@ connected to: 127.0.0.1
 Wed Apr 10 13:26:12 imported 60 objects
 {% endhighlight %}
 
-# update on 2015/07/21
+### update on 2015/07/21
 **mongoimport 导入数据时的数据类型问题**
 在使用mongoimport可以很方便的导入需要的数据，但是导入之后会发现数字型的值都会自动变为数值类型， 即使使用引号将其括起来。这对于代码出来来说，十分不方便。
 [stack overflow的讨论](http://stackoverflow.com/questions/24223443/mongoimport-choosing-field-type)
