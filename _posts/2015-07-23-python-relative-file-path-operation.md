@@ -8,7 +8,7 @@ tags: [ python, relative path ]
 
 python项目中，如果pyton代码需要访问某个外部文件，该文件位于代码文件的某个相对路径位置，我们可以在代码中使用相对路径来访问该文件。
 比如图中的代码结构：
-![files]({{ site.url }}/images/python_relative_file_path/files_structure.png)
+![files]({{ site.url }}/images/python_relative_file_path/files_structure.PNG)
 
 sample.py文件中，如果要访问配置文件server.ini文件，就可以用 "../conf/server.ini"来进行访问。
 
