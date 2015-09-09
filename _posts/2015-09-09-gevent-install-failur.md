@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 安装gevent失败 fatal error pyconfig.h No such file or directory
+title: gevent安装
 description: "gevent 安装失败"
 modified: 2015-09-09
 tags: [ python, gevent ]
