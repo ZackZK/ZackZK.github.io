@@ -9,16 +9,16 @@ tags: [ spark, spark configuration ]
 ## spark配置 ##
 spark的配置文件放在conf目录下，默认会有类似xx.template的模板文件，去掉后缀.template就可以作为spark相应的配置文件。
 
-### spark UI的IP和port口配置 ###
-比如，UI的ip和port口配置，在云服务器上，比如阿里云主机上，eth0默认是内部网络ip（用于阿里云主机之间通信），eth1才是外网可访问的ip地址。
-spark会使用eth0的ip地址作为UI 的ip地址，在conf/spark-env.sh文件中加入下面内容即可
+### spark 在阿里云上的配置 ##
+在一般的云服务器上一般会有两个ip地址，比如阿里云主机上，eth0默认是内部网络ip（用于阿里云主机之间通信），eth1才是外网可访问的ip地址。
+spark会默认会使用8080端口作为UI端口号，并且绑定在0.0.0.0上，也就意味着外部网络可以通过 http://eth1_ip:8080访问spark UI界面，
+如果要改变端口号，在conf/spark-env.sh文件中加入下面内容即可
 
 {% highlight bash %}
-export SPARK_MASTER_IP=12.12.12.12
-export SPARK_MASTER_WEBUI_PORT=8080
+export SPARK_MASTER_WEBUI_PORT=8090
 {% endhighlight %}
 
-注意： 如果是在云环境下，ip地址指定为外部网络
+如果当前指定的端口号被别的应用程序占用，spark自动会继续加1往下找到一个可用的端口号。
 
 ### Spark的log级别设置 ###
 默认情况下，spark会在屏幕打印INFO级别以上的log，这些信息对于调试来说很重要，但是当spark程序正常运行时，可能不需要这么多信息，这个时候，可以通过修改
