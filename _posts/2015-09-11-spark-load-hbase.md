@@ -8,6 +8,38 @@ tags: [ spark, hbase, spark cluster, spark configuration]
 
 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
 
+首先，加入下面依赖：
+
+{% highlight xml %}
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+    </dependencies>
+{% endhighlight %}
+
+下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
+
 {% highlight java %}
 
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -49,8 +81,6 @@ ROW                             COLUMN+CELL
 */
 public class spark_hbase_main {
     private static String appName = "Hello";
-    private static String startTime = "201409_0930";
-    private static String stopTime = "2014";
 
     public static void main(String[] args) {
         SparkConf sparkConf = new SparkConf().setAppName(appName);
@@ -59,8 +89,6 @@ public class spark_hbase_main {
         Configuration conf = HBaseConfiguration.create();
 
         Scan scan = new Scan();
-        //scan.setStartRow(Bytes.toBytes(startTime));
-        //scan.setStopRow(Bytes.toBytes(stopTime));
         scan.addFamily(Bytes.toBytes("course"));
         scan.addColumn(Bytes.toBytes("course"), Bytes.toBytes("art"));
         scan.addColumn(Bytes.toBytes("course"), Bytes.toBytes("math"));
@@ -84,6 +112,7 @@ public class spark_hbase_main {
                         TableInputFormat.class, ImmutableBytesWritable.class,
                         Result.class);
 
+                /* 生成类似 [(Jim, 80, 89), (Tom, 88, 97)] 的RDD */
                 JavaPairRDD<String, List<Integer>> art_scores = hBaseRDD.mapToPair(
                         new PairFunction<Tuple2<ImmutableBytesWritable, Result>, String, List<Integer>>() {
                             @Override
@@ -94,6 +123,8 @@ public class spark_hbase_main {
                                 byte[] art_score = results._2().getValue(Bytes.toBytes("course"), Bytes.toBytes("art"));
                                 byte[] math_score = results._2().getValue(Bytes.toBytes("course"), Bytes.toBytes("math"));
 
+                                /* 注意： Hbase里存的数据以Byte Array形式存储， 需要使用Integer.parseInt(Bytes.toString(art_score))将数据内容转化为整型
+                                * Integer.parseInt(price.toString()) 会得到错误答案 */
                                 list.add(Integer.parseInt(Bytes.toString(art_score)));
                                 list.add(Integer.parseInt(Bytes.toString(math_score)));
 
@@ -101,24 +132,39 @@ public class spark_hbase_main {
                             }
                         }
                 );
-                //System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + art_scores.collect());
 
+                /* 如果是使用Java8， 可以简化成下面的形式: 
+                JavaPairRDD<Integer, Double> stock_price_pair = hBaseRDD.mapToPair(
+                    (results) -> {
+                          List<Integer> list = new ArrayList<Integer>();
+
+                          byte[] art_score = results._2().getValue(Bytes.toBytes("course"), Bytes.toBytes("art"));
+                          byte[] math_score = results._2().getValue(Bytes.toBytes("course"), Bytes.toBytes("math"));
+
+                          list.add(Integer.parseInt(Bytes.toString(art_score)));
+                          list.add(Integer.parseInt(Bytes.toString(math_score)));
+
+                          return new Tuple2<String, List<Integer>>(Bytes.toString(results._1().get()), list);
+                    }
+                )
+                */
+
+                /* 笛卡尔乘积，生成 [((Jim, 80, 89), (Tom, 88, 97)), ((Tom, 88, 97), (Jim, 80, 89)), ((Jim, 80, 89), (Jim, 80, 89)),
+                ((Tom, 88, 97), (Tom, 88, 97))] 的RDD */] */
                 JavaPairRDD<Tuple2<String, List<Integer>>, Tuple2<String, List<Integer>>> cart = art_scores.cartesian(art_scores);
 
+                /* 利用row key的大小关系去除重复的组合关系， 生成 [((Jim, 80, 89), (Tom, 88, 97))] */
                 JavaPairRDD<Tuple2<String, List<Integer>>, Tuple2<String, List<Integer>>> cart2 = cart.filter(
                         new Function<Tuple2<Tuple2<String, List<Integer>>, Tuple2<String, List<Integer>>>, Boolean>() {
                             public Boolean call(Tuple2<Tuple2<String, List<Integer>>, Tuple2<String, List<Integer>>> tuple2Tuple2Tuple2) throws Exception {
-                                //System.out.println(tuple2Tuple2Tuple2._1()._1() + "    :Hello-------------------");
-                                //System.out.println(tuple2Tuple2Tuple2._2()._1() + "    :World-------------------");
 
                                 return tuple2Tuple2Tuple2._1()._1().compareTo(tuple2Tuple2Tuple2._2()._1()) < 0;
                             }
                         }
                 );
 
-                List<Tuple2<Tuple2<String, List<Integer>>, Tuple2<String, List<Integer>>>> a = cart.collect();
-
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxx" + cart2.collect());
+                /* 得到最终结果 */
+                cart_all = cart2.collect();
 
             } catch (Exception e) {
                 System.out.println(e);
