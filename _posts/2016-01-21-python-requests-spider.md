@@ -7,7 +7,7 @@ tags: [ python, requests, 爬虫]
 
 ---
 
-requests 帮助主页： <http://docs.python-requests.org/en/latest/user/quickstart/>
+requests 帮助主页： http://docs.python-requests.org/en/latest/user/quickstart/
 
 #1. requests的json支持
     requests本身自带了json支持，不需要额外的json库来做转换。比如得到的内容是json格式，可以使用
@@ -24,9 +24,7 @@ r.json()
 #2. form-encoded data
 
 requests库可以简单的将dict类型传递给get或post方法的data参数就可以实现自动实现传递form-encoded参数。但是，如果参数本身是一个数组的话，比如网站需要传下面的POST参数：
-
-
- ![post_array]({{ site.url}}/images/python_requests/post_form_encoded_array.png)
+![post_array]({{ site.url}}/images/python_requests/post_form_encoded_array.png)
 
 可以看出来，amarket和coupon_descr都是数组类型，有多个数值，这个时候需要通过将list类型赋值给对应的dict key，代码如下：
 
