@@ -43,3 +43,31 @@ tags: [ansible]
     - apt: name=apache2 state=installed
       environment: "{{proxy_env}}"
 {% endhighlight %}
+
+## 2. 安装mongodb
+
+{% highlight yaml%}
+---
+- name: download key
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=EA312927 state=present
+
+- name : 2. update Repo
+  apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse' state=present
+
+- name: 3. install mongodb
+  apt: name=mongodb-org state=present allow_unauthenticated=yes
+
+- name: 4. start mongodb
+  service: name=mongod state=started enabled=yes
+
+- name: 5. create mongodb user
+  mongodb_user: database=algo name=algo password=algo state=present
+{% endhighlight %}
+
+
+运行ansible-playbook到第三步时碰到这样的错误“E: There were unauthenticated packages and -y was used without --allow-unauthenticated”
+查看apt模块说明，需要加 allow_unauthenticated=yes 参数
+
+{% highlight yaml%}
+apt: name=mongodb-org state=present 
+{% endhighlight %}
