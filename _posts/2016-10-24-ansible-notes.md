@@ -8,9 +8,12 @@ tags: [ansible]
 ---
 
 ## 1. Network is unreachable问题
-** 问题 **  ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
-** 原因 ** ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
-** 解决方法 **： 使用ansible的environment关键字来设置proxy
+问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+
+原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+
+解决方法 ： 使用ansible的environment关键字来设置proxy
+
 见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
 
 官方的例子
