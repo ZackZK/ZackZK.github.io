@@ -8,9 +8,9 @@ tags: [ansible]
 ---
 
 ## 1. Network is unreachable问题
-问题： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
-原因： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
-解决方法： 使用ansible的environment关键字来设置proxy
+** 问题 **  ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+** 原因 ** ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+** 解决方法 **： 使用ansible的environment关键字来设置proxy
 见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
 
 官方的例子
@@ -55,7 +55,7 @@ tags: [ansible]
   apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse' state=present
 
 - name: 3. install mongodb
-  apt: name=mongodb-org state=present allow_unauthenticated=yes
+  apt: name=mongodb-org state=present 
 
 - name: 4. start mongodb
   service: name=mongod state=started enabled=yes
@@ -69,5 +69,5 @@ tags: [ansible]
 查看apt模块说明，需要加 allow_unauthenticated=yes 参数
 
 {% highlight yaml%}
-apt: name=mongodb-org state=present 
+apt: name=mongodb-org state=present allow_unauthenticated=yes
 {% endhighlight %}
