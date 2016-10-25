@@ -74,3 +74,88 @@ tags: [ansible]
 {% highlight yaml%}
 apt: name=mongodb-org state=present allow_unauthenticated=yes
 {% endhighlight %}
+
+## 3. 编译安装mesos
+
+根据http://mesos.apache.org/gettingstarted/ 的步骤：
+
+1. 下载解压mesos源代码
+
+{% highlight yaml%}
+- name: download mesos source code
+  get_url:
+    url: http://archive.apache.org/dist/mesos/1.0.1/mesos-1.0.1.tar.gz
+    dest: /var/log/mesos-1.0.1.tar.gz
+    force: no
+
+- name: untar mesos source
+  unarchive: src=/var/log/mesos-1.0.1.tar.gz dest=/var/log/ remote_src=yes copy=no
+{% endhighlight %}
+
+对于当前使用的ansible 2.1.2.0，
+get_url模块经过测试验证如果目标地址是目录的话，force选项即使为no也不会产生任何作用，即如果 “dest: /var/log/” 将mesos代码放在/var/log/目录下，但是未指定目标文件名，虽然force=no，get_url也会重新下载
+
+unarchive模块的remote_src和copy选项冲突的问题，虽然ansible官方的指导手册上说明如果使用 remote_src=yes 的话，就会去远程服务器上访问文件，但是经过验证，在2.1.2.0上，仍然是访问ansible主机上文件。加了copy=no才解决。应该在2.2以后版本解决了该问题
+
+
+2. 在ubuntu上要安装一系列依赖：
+
+{% highlight yaml%}
+- name: install System Requirements
+  apt: name={{item}} state=present
+  with_items:
+    - tar
+    - wget
+    - git
+    - openjdk-7-jdk
+    - autoconf
+    - libtool
+    - build-essential
+    - python-dev
+    - libcurl4-nss-dev
+    - libsasl2-dev
+    - libsasl2-modules
+    - maven
+    - libapr1-dev
+    - libsvn-dev
+    - zlib1g-dev                # 官方文档中没有
+{% endhighlight %}
+
+3. 编译安装mesos
+
+{% highlight yaml%}
+- name: configure mesos
+  command: './configure chdir=/var/log/mesos-1.0.1'
+
+- name: make mesos
+  make: chdir=/var/log/mesos-1.0.1
+  {% endhighlight %}
+
+编译过程中碰到maven编译出错，报下载不了pom文件，这个是因为maven不使用系统默认的环境变量。参考https://maven.apache.org/guides/mini/guide-proxies.html, 有两种方式为maven添加代理。这里因为不是直接命令行maven编译，所以采用maven配置文件的方式。创建settings.xml文件，内如如下：
+{% highlight xml%}
+<settings>
+  .
+  .
+  <proxies>
+   <proxy>
+      <id>example-proxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.example.com</host>
+      <port>8080</port>
+      <username>proxyuser</username>
+      <password>somepassword</password>
+      <nonProxyHosts>www.google.com|*.example.com</nonProxyHosts>
+    </proxy>
+  </proxies>
+  .
+  .
+</settings>
+{% endhighlight %}
+
+将示例中相关参数根据实际情况修改。在编译mesos之前，将该配置文件拷贝到远程主机的 ~/.m2/setting.xml
+
+{% highlight yaml%}
+- name: add proxy for maven
+  template: src=settings.xml dest=settings.xml
+{% endhighlight %}
