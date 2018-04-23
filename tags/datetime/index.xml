@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Datetime on 我的Blog</title>
+    <link>http://localhost:1313/tags/datetime/</link>
+    <description>Recent content in Datetime on 我的Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>©除非特殊说明，欢迎转载</copyright>
+    <lastBuildDate>Fri, 26 Aug 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/tags/datetime/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>python 时间类型操作</title>
+      <link>http://localhost:1313/post/2016-08-26-python-datetime-string-operation/</link>
+      <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-08-26-python-datetime-string-operation/</guid>
+      <description>经常碰到需要对日期时间的字符串操作，查了又经常忘记，所以写到这里当作自己的笔记。
+datetime模块里有几个经常用到类, datetime, date, time
+ date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 + 时间  datetime类 从字符串到datetime  strptime函数 &amp;gt;&amp;gt;&amp;gt; datetime.datetime.strptime(&amp;#39;06-05-2010&amp;#39;, &amp;#34;%d-%m-%Y&amp;#34;).date() datetime.date(2010, 05, 06)
+ 第三方库 dateutil from dateutil import parser dt = parser.parse(&amp;#34;Aug 28 1999 12:00AM&amp;#34;)
+  可以通过pip命令安装dateutil安装 pip install python-dateutil
+| 格式化 | 意义 | 例子 | |&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;| | %d | Day of the month as a zero-padded decimal number.前面填充0的日期 | 比如00, 01, &amp;hellip;, 31 | | %m | Month as a zero-padded decimal number.</description>
+    </item>
+    
+  </channel>
+</rss>

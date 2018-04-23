@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的Blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on 我的Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>©除非特殊说明，欢迎转载</copyright>
+    <lastBuildDate>Sat, 26 Nov 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>clojure 笔记</title>
+      <link>http://localhost:1313/post/2016-11-26-clojure-note/</link>
+      <pubDate>Sat, 26 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-11-26-clojure-note/</guid>
+      <description> clojure修改maven repo的方法 使用国内clojure maven repo Maven官方库经常非常慢，阿里云也提供maven库镜像，可以在project.clj中添加下面配置使用阿里云repo：
+:mirrors {&amp;#34;central&amp;#34; {:name &amp;#34;central&amp;#34; :url &amp;#34;http://maven.aliyun.com/nexus/content/groups/public/&amp;#34;}} </description>
+    </item>
+    
+    <item>
+      <title>emacs 笔记</title>
+      <link>http://localhost:1313/post/2016-11-18-emacs-notes/</link>
+      <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-11-18-emacs-notes/</guid>
+      <description>emacs 设置代理 lisp (setq url-proxy-services &#39;((&amp;quot;no_proxy&amp;quot; . &amp;quot;^\\(localhost\\|10.*\\)&amp;quot;) (&amp;quot;http&amp;quot; . &amp;quot;proxy.com:8080&amp;quot;) (&amp;quot;https&amp;quot; . &amp;quot;proxy.com:8080&amp;quot;))) 
+emacs 书签 与存储光标位置的寄存器略有不同 书签可以使用单词来命名，而不限于一个字符。起一个容易记住的名字 退出 Emacs 后，书签不会消失，下次还可以使用
+C-x r m (name) M-x bookmark-set 设置书签 C-x r b (name) M-x bookmark-jump 跳转到书签 C-x r l M-x bookmark-bmenu-list 书签列表 M-x bookmark-delete 删除书签 M-x bookmark-load 读取存储书签文件
+书签默认存储在 ~/.emacs.bmk 文件中 在配置文件中，可以设置书签存储的文件
+;; 书签文件的路径及文件名 (setq bookmark-default-file &amp;ldquo;~/.emacs.d/.emacs.bmk&amp;rdquo;) ;; 同步更新书签文件 ;; 或者退出时保存 (setq bookmark-save-flag 1)</description>
+    </item>
+    
+    <item>
+      <title>docker 使用笔记</title>
+      <link>http://localhost:1313/post/2016-10-27-docker-usage-notes/</link>
+      <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-10-27-docker-usage-notes/</guid>
+      <description>1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
+ 为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
+Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy.</description>
+    </item>
+    
+    <item>
+      <title>ansible使用问题总结</title>
+      <link>http://localhost:1313/post/2016-10-24-ansible-notes/</link>
+      <pubDate>Mon, 24 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-10-24-ansible-notes/</guid>
+      <description>1. Network is unreachable问题 问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+解决方法 ： 使用ansible的environment关键字来设置proxy
+见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
+官方的例子
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver.</description>
+    </item>
+    
+    <item>
+      <title>python exec的使用过程中碰到的坑</title>
+      <link>http://localhost:1313/post/2016-08-26-python-exec-statement/</link>
+      <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-08-26-python-exec-statement/</guid>
+      <description> python的exec可以直接运行一个文件中的python脚本，或者一个字符串里的python语句。为什么不直接调用这个文件，或者语句呢？一个典型的场景就是我们要运行的python脚本存在数据库中，当然也可以把文件内容从数据库中读取出来，生成临时文件，再运行。但是如果使用exec，就可以on fly的运行python脚本了。
+exec 语法 </description>
+    </item>
+    
+    <item>
+      <title>python 时间类型操作</title>
+      <link>http://localhost:1313/post/2016-08-26-python-datetime-string-operation/</link>
+      <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-08-26-python-datetime-string-operation/</guid>
+      <description>经常碰到需要对日期时间的字符串操作，查了又经常忘记，所以写到这里当作自己的笔记。
+datetime模块里有几个经常用到类, datetime, date, time
+ date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 + 时间  datetime类 从字符串到datetime  strptime函数 &amp;gt;&amp;gt;&amp;gt; datetime.datetime.strptime(&amp;#39;06-05-2010&amp;#39;, &amp;#34;%d-%m-%Y&amp;#34;).date() datetime.date(2010, 05, 06)
+ 第三方库 dateutil from dateutil import parser dt = parser.parse(&amp;#34;Aug 28 1999 12:00AM&amp;#34;)
+  可以通过pip命令安装dateutil安装 pip install python-dateutil
+| 格式化 | 意义 | 例子 | |&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;| | %d | Day of the month as a zero-padded decimal number.前面填充0的日期 | 比如00, 01, &amp;hellip;, 31 | | %m | Month as a zero-padded decimal number.</description>
+    </item>
+    
+    <item>
+      <title>python 杂项记录</title>
+      <link>http://localhost:1313/post/2016-08-26-python-misc/</link>
+      <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-08-26-python-misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>使用requests的网络爬虫</title>
+      <link>http://localhost:1313/post/2016-01-21-python-requests-spider/</link>
+      <pubDate>Thu, 21 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2016-01-21-python-requests-spider/</guid>
+      <description> requests 帮助主页： http://docs.python-requests.org/en/latest/user/quickstart/
+1. requests的json支持 requests本身自带了json支持，不需要额外的json库来做转换。比如得到的内容是json格式，可以使用
+import requests r = requests.get(&amp;#39;https://api.github.com/events&amp;#39;) r.json() [{u&amp;#39;repository&amp;#39;: {u&amp;#39;open_issues&amp;#39;: 0, u&amp;#39;url&amp;#39;: &amp;#39;https://github.com/... 2. form-encoded data requests库可以简单的将dict类型传递给get或post方法的data参数就可以实现自动实现传递form-encoded参数。但是，如果参数本身是一个数组的话，比如网站需要传下面的POST参数：
+可以看出来，amarket和coupon_descr都是数组类型，有多个数值，这个时候需要通过将list类型赋值给对应的dict key，代码如下：
+data = {&amp;#34;is_funda_search&amp;#34;:&amp;#34;0&amp;#34;, &amp;#34;fundavolume&amp;#34;:&amp;#34;100&amp;#34;, &amp;#34;amarket[]&amp;#34;:[&amp;#34;sh&amp;#34;, &amp;#34;sz&amp;#34;], &amp;#34;coupon_descr[]&amp;#34;: [&amp;#34;+3.0%&amp;#34;, &amp;#34;+3.2%&amp;#34;, &amp;#34;+3.5%&amp;#34;, &amp;#34;+4.0%&amp;#34;, &amp;#34;other&amp;#34;], &amp;#34;rp&amp;#34;:&amp;#34;50&amp;#34;, &amp;#34;maturity&amp;#34;:&amp;#34;&amp;#34;} content = s.post(url, data=data)</description>
+    </item>
+    
+    <item>
+      <title>spark读取hbase内容及在集群环境下的配置</title>
+      <link>http://localhost:1313/post/2015-09-11-spark-load-hbase/</link>
+      <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-09-11-spark-load-hbase/</guid>
+      <description>spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
+首先，加入下面依赖：
+&amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-core_2.10&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-common&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-client&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-server&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
+import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbase.util.Base64; import org.apache.hadoop.hbase.util.Bytes; import org.apache.spark.api.java.JavaSparkContext; import org.apache.spark.api.java.JavaRDD; import org.apache.spark.SparkConf; import org.apache.spark.api.java.function.Function; import org.apache.spark.api.java.function.Function2; import org.apache.hadoop.conf.Configuration; import org.apache.hadoop.hbase.client.Scan; import org.apache.hadoop.hbase.client.Result; import org.apache.hadoop.hbase.io.ImmutableBytesWritable; import org.apache.hadoop.hbase.mapreduce.TableInputFormat; import org.apache.spark.api.java.JavaPairRDD; import org.apache.hadoop.hbase.protobuf.ProtobufUtil; import org.apache.hadoop.hbase.protobuf.generated.ClientProtos; import org.apache.spark.api.java.function.PairFunction; import scala.Tuple10; import scala.Tuple2; import java.io.IOException; import java.util.ArrayList; import java.</description>
+    </item>
+    
+    <item>
+      <title>gevent安装</title>
+      <link>http://localhost:1313/post/2015-09-09-gevent-install-failure/</link>
+      <pubDate>Wed, 09 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-09-09-gevent-install-failure/</guid>
+      <description>gevent的安装过程：
+1. 安装greenlet依赖 sudo pip install greenlet   2. 安装gevent sudo pip install gevent  安装过程中，碰到下面错误：
+gevent/gevent.core.c:9:22: fatal error: pyconfig.h: No such file or directory #include &amp;#34;pyconfig.h&amp;#34;  ^ compilation terminated. error: command &amp;#39;x86_64-linux-gnu-gcc&amp;#39; failed with exit status 1 ---------------------------------------- Cleaning up... Command /usr/bin/python -c &amp;#34;import setuptools, tokenize;__file__=&amp;#39;/tmp/pip_build_root/gevent/setup.py&amp;#39;;exec(compile(getattr(tokenize, &amp;#39;open&amp;#39;, open)(__file__).read().replace(&amp;#39;\r\n&amp;#39;, &amp;#39;\n&amp;#39;), __file__, &amp;#39;exec&amp;#39;))&amp;#34; install --record /tmp/pip-11RdgV-record/install-record.txt --single-version-externally-managed --compile failed with error code 1 in /tmp/pip_build_root/gevent Storing debug log for failure in /root/.</description>
+    </item>
+    
+    <item>
+      <title>spark 配置及使用</title>
+      <link>http://localhost:1313/post/2015-09-09-spark-usage/</link>
+      <pubDate>Wed, 09 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-09-09-spark-usage/</guid>
+      <description>spark配置 spark的配置文件放在conf目录下，默认会有类似xx.template的模板文件，去掉后缀.template就可以作为spark相应的配置文件。
+spark 在阿里云上的配置 在一般的云服务器上一般会有两个ip地址，比如阿里云主机上，eth0默认是内部网络ip（用于阿里云主机之间通信），eth1才是外网可访问的ip地址。 spark会默认会使用8080端口作为UI端口号，并且绑定在0.0.0.0上，也就意味着外部网络可以通过 http://eth1_ip:8080访问spark UI界面， 如果要改变端口号，在conf/spark-env.sh文件中加入下面内容即可
+export SPARK_MASTER_WEBUI_PORT=8090 如果当前指定的端口号被别的应用程序占用，spark自动会继续加1往下找到一个可用的端口号。
+Spark的log级别设置 默认情况下，spark会在屏幕打印INFO级别以上的log，这些信息对于调试来说很重要，但是当spark程序正常运行时，可能不需要这么多信息，这个时候，可以通过修改 conf/log4j.properties： 在文件中找到该行： log4j.rootCategory=INFO, console 将其修改成 log4j.rootCategory=WARN, console</description>
+    </item>
+    
+    <item>
+      <title>python 相对路径文件的操作</title>
+      <link>http://localhost:1313/post/2015-07-23-python-relative-file-path-operation/</link>
+      <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-07-23-python-relative-file-path-operation/</guid>
+      <description>python项目中，如果pyton代码需要访问某个外部文件，该文件位于代码文件的某个相对路径位置，我们可以在代码中使用相对路径来访问该文件。 比如图中的代码结构： sample.py文件中，如果要访问配置文件server.ini文件，就可以用 &amp;ldquo;../conf/server.ini&amp;rdquo;来进行访问。
+但是经常的问题是，该python文件又被别的目录的python文件import引用， 此时相对路径就会出错。这是因为此时相对路径是基于当前运行脚本的路径来计算的， 如果被引用的python文件和调用文件不在同一个目录，则相对路径就会失效。
+比如，我们的例子中， sample.py文件内容如下:
+import ConfigParser import os def read_conf(): file_path = &amp;#39;../conf/server.ini&amp;#39; config = ConfigParser.ConfigParser() config.read(file_path) return config.get(&amp;#39;conf&amp;#39;, &amp;#39;value&amp;#39;) if __name__ == &amp;#39;__main__&amp;#39;: print read_conf() main.py内容如下:
+from utils.sample import read_conf print read_conf() 比如上图中，如果main.py调用read_conf时就会发现server.ini文件找不到。问题就处在运行main.py时，当前路径是main.py所在的文件夹，而sample.py中使用的相对 路径基于该文件夹就会找错位置。解决办法是在sample.py中使用文件绝对路径来访问server.ini文件， 但是我们又要根据脚本存放的当前位置来获得运行时的路径。这个时候 我们就需要用到python中的 __file__变量， 该内置变量存放了本python文件的当前路径信息，根据该变量，我们可以os.path.dirname(__file__)得到相应文件 的绝对路径。
+在sample.py中file_path变量做如下修改：
+file_path = &amp;#39;../conf/server.ini&amp;#39; --&amp;gt; file_path = os.path.join(os.path.dirname(__file__) + &amp;#39;/../conf/server.ini&amp;#39;) 注意 路径前加 &amp;lsquo;/&amp;rsquo;,否则文件路径会不完整。
+参考资料：
+http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</description>
+    </item>
+    
+    <item>
+      <title>mongodb从excel中导入数据</title>
+      <link>http://localhost:1313/post/2015-07-15-mongodb-import-from-excel/</link>
+      <pubDate>Wed, 15 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-07-15-mongodb-import-from-excel/</guid>
+      <description>mongoimport工具可以从指定的CSV， TSV 或者 JSON数据中导入到mongoDB。 而excel表格可以直接另存为csv格式。
+$ mongoimport connected to: 127.0.0.1 no collection specified! Import CSV, TSV or JSON data into MongoDB. options: -h [ --host ] arg mongo host to connect to ( &amp;lt;set name&amp;gt;/s1,s2 for sets) -u [ --username ] arg username -p [ --password ] arg password -d [ --db ] arg database to use -c [ --collection ] arg collection to use (some commands) -f [ --fields ] arg comma separated list of field names e.</description>
+    </item>
+    
+    <item>
+      <title>emacs使用及配置</title>
+      <link>http://localhost:1313/post/2015-07-13-emacs-config/</link>
+      <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-07-13-emacs-config/</guid>
+      <description>自己的emacs配置： https://github.com/ZackZK/emacs-config</description>
+    </item>
+    
+    <item>
+      <title>如何创建swap分区</title>
+      <link>http://localhost:1313/post/2015-07-13-linux-swap/</link>
+      <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/post/2015-07-13-linux-swap/</guid>
+      <description>在安装运行某些软件的时候，有时会碰到一些内存不足的情况，这个时候一个办法就是使用swap分区来虚拟出额外的内存空间。 我们主要使用了swapon这个命令：
+root@iZ23om0selfZ:~# swapon -h Usage: swapon \[options] \[&amp;lt;spec&amp;gt;] Options: -a, --all enable all swaps from /etc/fstab -d, --discard discard freed pages before they are reused -e, --ifexists silently skip devices that do not exis -f, --fixpgsz reinitialize the swap space if necessary -h, --help display help and exit -p, --priority &amp;lt;prio&amp;gt; specify the priority of the swap device. -s, --summary display summary about used swap devices and exit -v, --verbose verbose mode -V, --version display version and exit The &amp;lt;spec&amp;gt; parameter: -L &amp;lt;label&amp;gt; LABEL of device to be used -U &amp;lt;uuid&amp;gt; UUID of device to be used LABEL=&amp;lt;label&amp;gt; LABEL of device to be used UUID=&amp;lt;uuid&amp;gt; UUID of device to be used &amp;lt;device&amp;gt; name of device to be used &amp;lt;file&amp;gt; name of file to be used   具体方法如下： 1.</description>
+    </item>
+    
+  </channel>
+</rss>
