@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lisp on 我的Blog</title>
-    <link>http://localhost:1313/tags/lisp/</link>
+    <link>http://www.kotlinor.com/tags/lisp/</link>
     <description>Recent content in Lisp on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Sat, 26 Nov 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/tags/lisp/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/lisp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>clojure 笔记</title>
-      <link>http://localhost:1313/post/2016-11-26-clojure-note/</link>
+      <link>http://www.kotlinor.com/post/2016-11-26-clojure-note/</link>
       <pubDate>Sat, 26 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/post/2016-11-26-clojure-note/</guid>
+      <guid>http://www.kotlinor.com/post/2016-11-26-clojure-note/</guid>
       <description> clojure修改maven repo的方法 使用国内clojure maven repo Maven官方库经常非常慢，阿里云也提供maven库镜像，可以在project.clj中添加下面配置使用阿里云repo：
 :mirrors {&amp;#34;central&amp;#34; {:name &amp;#34;central&amp;#34; :url &amp;#34;http://maven.aliyun.com/nexus/content/groups/public/&amp;#34;}} </description>
     </item>

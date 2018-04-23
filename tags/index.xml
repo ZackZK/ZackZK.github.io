@@ -2,211 +2,211 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 我的Blog</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>http://www.kotlinor.com/tags/</link>
     <description>Recent content in Tags on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Mon, 24 Oct 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Ansible</title>
-      <link>http://localhost:1313/tags/ansible/</link>
+      <link>http://www.kotlinor.com/tags/ansible/</link>
       <pubDate>Mon, 24 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/ansible/</guid>
+      <guid>http://www.kotlinor.com/tags/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Clojure</title>
-      <link>http://localhost:1313/tags/clojure/</link>
+      <link>http://www.kotlinor.com/tags/clojure/</link>
       <pubDate>Sat, 26 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/clojure/</guid>
+      <guid>http://www.kotlinor.com/tags/clojure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Datetime</title>
-      <link>http://localhost:1313/tags/datetime/</link>
+      <link>http://www.kotlinor.com/tags/datetime/</link>
       <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/datetime/</guid>
+      <guid>http://www.kotlinor.com/tags/datetime/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docker</title>
-      <link>http://localhost:1313/tags/docker/</link>
+      <link>http://www.kotlinor.com/tags/docker/</link>
       <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/docker/</guid>
+      <guid>http://www.kotlinor.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Elisp</title>
-      <link>http://localhost:1313/tags/elisp/</link>
+      <link>http://www.kotlinor.com/tags/elisp/</link>
       <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/elisp/</guid>
+      <guid>http://www.kotlinor.com/tags/elisp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Emacs</title>
-      <link>http://localhost:1313/tags/emacs/</link>
+      <link>http://www.kotlinor.com/tags/emacs/</link>
       <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/emacs/</guid>
+      <guid>http://www.kotlinor.com/tags/emacs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Exec</title>
-      <link>http://localhost:1313/tags/exec/</link>
+      <link>http://www.kotlinor.com/tags/exec/</link>
       <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/exec/</guid>
+      <guid>http://www.kotlinor.com/tags/exec/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gevent</title>
-      <link>http://localhost:1313/tags/gevent/</link>
+      <link>http://www.kotlinor.com/tags/gevent/</link>
       <pubDate>Wed, 09 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/gevent/</guid>
+      <guid>http://www.kotlinor.com/tags/gevent/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hbase</title>
-      <link>http://localhost:1313/tags/hbase/</link>
+      <link>http://www.kotlinor.com/tags/hbase/</link>
       <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/hbase/</guid>
+      <guid>http://www.kotlinor.com/tags/hbase/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>http://localhost:1313/tags/linux/</link>
+      <link>http://www.kotlinor.com/tags/linux/</link>
       <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/linux/</guid>
+      <guid>http://www.kotlinor.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Lisp</title>
-      <link>http://localhost:1313/tags/lisp/</link>
+      <link>http://www.kotlinor.com/tags/lisp/</link>
       <pubDate>Sat, 26 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/lisp/</guid>
+      <guid>http://www.kotlinor.com/tags/lisp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mongodb</title>
-      <link>http://localhost:1313/tags/mongodb/</link>
+      <link>http://www.kotlinor.com/tags/mongodb/</link>
       <pubDate>Wed, 15 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/mongodb/</guid>
+      <guid>http://www.kotlinor.com/tags/mongodb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Proxy</title>
-      <link>http://localhost:1313/tags/proxy/</link>
+      <link>http://www.kotlinor.com/tags/proxy/</link>
       <pubDate>Thu, 27 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/proxy/</guid>
+      <guid>http://www.kotlinor.com/tags/proxy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>http://localhost:1313/tags/python/</link>
+      <link>http://www.kotlinor.com/tags/python/</link>
       <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/python/</guid>
+      <guid>http://www.kotlinor.com/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Relative Path</title>
-      <link>http://localhost:1313/tags/relative-path/</link>
+      <link>http://www.kotlinor.com/tags/relative-path/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/relative-path/</guid>
+      <guid>http://www.kotlinor.com/tags/relative-path/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Requests</title>
-      <link>http://localhost:1313/tags/requests/</link>
+      <link>http://www.kotlinor.com/tags/requests/</link>
       <pubDate>Thu, 21 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/requests/</guid>
+      <guid>http://www.kotlinor.com/tags/requests/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark</title>
-      <link>http://localhost:1313/tags/spark/</link>
+      <link>http://www.kotlinor.com/tags/spark/</link>
       <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/spark/</guid>
+      <guid>http://www.kotlinor.com/tags/spark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark Cluster</title>
-      <link>http://localhost:1313/tags/spark-cluster/</link>
+      <link>http://www.kotlinor.com/tags/spark-cluster/</link>
       <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/spark-cluster/</guid>
+      <guid>http://www.kotlinor.com/tags/spark-cluster/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark Configuration</title>
-      <link>http://localhost:1313/tags/spark-configuration/</link>
+      <link>http://www.kotlinor.com/tags/spark-configuration/</link>
       <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/spark-configuration/</guid>
+      <guid>http://www.kotlinor.com/tags/spark-configuration/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Swap</title>
-      <link>http://localhost:1313/tags/swap/</link>
+      <link>http://www.kotlinor.com/tags/swap/</link>
       <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/swap/</guid>
+      <guid>http://www.kotlinor.com/tags/swap/</guid>
       <description></description>
     </item>
     
     <item>
       <title>代理</title>
-      <link>http://localhost:1313/tags/%E4%BB%A3%E7%90%86/</link>
+      <link>http://www.kotlinor.com/tags/%E4%BB%A3%E7%90%86/</link>
       <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/%E4%BB%A3%E7%90%86/</guid>
+      <guid>http://www.kotlinor.com/tags/%E4%BB%A3%E7%90%86/</guid>
       <description></description>
     </item>
     
     <item>
       <title>爬虫</title>
-      <link>http://localhost:1313/tags/%E7%88%AC%E8%99%AB/</link>
+      <link>http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/</link>
       <pubDate>Thu, 21 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/%E7%88%AC%E8%99%AB/</guid>
+      <guid>http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/</guid>
       <description></description>
     </item>
     

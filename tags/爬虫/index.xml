@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>爬虫 on 我的Blog</title>
-    <link>http://localhost:1313/tags/%E7%88%AC%E8%99%AB/</link>
+    <link>http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/</link>
     <description>Recent content in 爬虫 on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Thu, 21 Jan 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>使用requests的网络爬虫</title>
-      <link>http://localhost:1313/post/2016-01-21-python-requests-spider/</link>
+      <link>http://www.kotlinor.com/post/2016-01-21-python-requests-spider/</link>
       <pubDate>Thu, 21 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/post/2016-01-21-python-requests-spider/</guid>
+      <guid>http://www.kotlinor.com/post/2016-01-21-python-requests-spider/</guid>
       <description> requests 帮助主页： http://docs.python-requests.org/en/latest/user/quickstart/
 1. requests的json支持 requests本身自带了json支持，不需要额外的json库来做转换。比如得到的内容是json格式，可以使用
 import requests r = requests.get(&amp;#39;https://api.github.com/events&amp;#39;) r.json() [{u&amp;#39;repository&amp;#39;: {u&amp;#39;open_issues&amp;#39;: 0, u&amp;#39;url&amp;#39;: &amp;#39;https://github.com/... 2. form-encoded data requests库可以简单的将dict类型传递给get或post方法的data参数就可以实现自动实现传递form-encoded参数。但是，如果参数本身是一个数组的话，比如网站需要传下面的POST参数：

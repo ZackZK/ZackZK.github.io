@@ -3,231 +3,231 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://localhost:1313/post/2016-11-26-clojure-note/</loc>
+    <loc>http://www.kotlinor.com/post/2016-11-26-clojure-note/</loc>
     <lastmod>2016-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-11-18-emacs-notes/</loc>
+    <loc>http://www.kotlinor.com/post/2016-11-18-emacs-notes/</loc>
     <lastmod>2016-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-10-27-docker-usage-notes/</loc>
+    <loc>http://www.kotlinor.com/post/2016-10-27-docker-usage-notes/</loc>
     <lastmod>2016-10-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-10-24-ansible-notes/</loc>
+    <loc>http://www.kotlinor.com/post/2016-10-24-ansible-notes/</loc>
     <lastmod>2016-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-08-26-python-exec-statement/</loc>
+    <loc>http://www.kotlinor.com/post/2016-08-26-python-exec-statement/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-08-26-python-datetime-string-operation/</loc>
+    <loc>http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-08-26-python-misc/</loc>
+    <loc>http://www.kotlinor.com/post/2016-08-26-python-misc/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2016-01-21-python-requests-spider/</loc>
+    <loc>http://www.kotlinor.com/post/2016-01-21-python-requests-spider/</loc>
     <lastmod>2016-01-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-09-11-spark-load-hbase/</loc>
+    <loc>http://www.kotlinor.com/post/2015-09-11-spark-load-hbase/</loc>
     <lastmod>2015-09-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-09-09-gevent-install-failure/</loc>
+    <loc>http://www.kotlinor.com/post/2015-09-09-gevent-install-failure/</loc>
     <lastmod>2015-09-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-09-09-spark-usage/</loc>
+    <loc>http://www.kotlinor.com/post/2015-09-09-spark-usage/</loc>
     <lastmod>2015-09-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-07-23-python-relative-file-path-operation/</loc>
+    <loc>http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/</loc>
     <lastmod>2015-07-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-07-15-mongodb-import-from-excel/</loc>
+    <loc>http://www.kotlinor.com/post/2015-07-15-mongodb-import-from-excel/</loc>
     <lastmod>2015-07-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-07-13-emacs-config/</loc>
+    <loc>http://www.kotlinor.com/post/2015-07-13-emacs-config/</loc>
     <lastmod>2016-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/2015-07-13-linux-swap/</loc>
+    <loc>http://www.kotlinor.com/post/2015-07-13-linux-swap/</loc>
     <lastmod>2015-07-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/ansible/</loc>
+    <loc>http://www.kotlinor.com/tags/ansible/</loc>
     <lastmod>2016-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://www.kotlinor.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/clojure/</loc>
+    <loc>http://www.kotlinor.com/tags/clojure/</loc>
     <lastmod>2016-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/datetime/</loc>
+    <loc>http://www.kotlinor.com/tags/datetime/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/docker/</loc>
+    <loc>http://www.kotlinor.com/tags/docker/</loc>
     <lastmod>2016-10-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/elisp/</loc>
+    <loc>http://www.kotlinor.com/tags/elisp/</loc>
     <lastmod>2016-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/emacs/</loc>
+    <loc>http://www.kotlinor.com/tags/emacs/</loc>
     <lastmod>2016-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/exec/</loc>
+    <loc>http://www.kotlinor.com/tags/exec/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/gevent/</loc>
+    <loc>http://www.kotlinor.com/tags/gevent/</loc>
     <lastmod>2015-09-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/hbase/</loc>
+    <loc>http://www.kotlinor.com/tags/hbase/</loc>
     <lastmod>2015-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/linux/</loc>
+    <loc>http://www.kotlinor.com/tags/linux/</loc>
     <lastmod>2015-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/lisp/</loc>
+    <loc>http://www.kotlinor.com/tags/lisp/</loc>
     <lastmod>2016-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/mongodb/</loc>
+    <loc>http://www.kotlinor.com/tags/mongodb/</loc>
     <lastmod>2015-07-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>http://www.kotlinor.com/post/</loc>
     <lastmod>2016-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/proxy/</loc>
+    <loc>http://www.kotlinor.com/tags/proxy/</loc>
     <lastmod>2016-10-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/python/</loc>
+    <loc>http://www.kotlinor.com/tags/python/</loc>
     <lastmod>2016-08-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/relative-path/</loc>
+    <loc>http://www.kotlinor.com/tags/relative-path/</loc>
     <lastmod>2015-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/requests/</loc>
+    <loc>http://www.kotlinor.com/tags/requests/</loc>
     <lastmod>2016-01-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/spark/</loc>
+    <loc>http://www.kotlinor.com/tags/spark/</loc>
     <lastmod>2015-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/spark-cluster/</loc>
+    <loc>http://www.kotlinor.com/tags/spark-cluster/</loc>
     <lastmod>2015-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/spark-configuration/</loc>
+    <loc>http://www.kotlinor.com/tags/spark-configuration/</loc>
     <lastmod>2015-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/swap/</loc>
+    <loc>http://www.kotlinor.com/tags/swap/</loc>
     <lastmod>2015-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://www.kotlinor.com/tags/</loc>
     <lastmod>2016-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/%E4%BB%A3%E7%90%86/</loc>
+    <loc>http://www.kotlinor.com/tags/%E4%BB%A3%E7%90%86/</loc>
     <lastmod>2016-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://www.kotlinor.com/</loc>
     <lastmod>2016-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/%E7%88%AC%E8%99%AB/</loc>
+    <loc>http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2016-01-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
