@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Elisp on 我的Blog</title>
-    <link>http://ZackZK.github.io/tags/elisp/</link>
+    <link>http://www.kotlinor.com/tags/elisp/</link>
     <description>Recent content in Elisp on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Fri, 18 Nov 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://ZackZK.github.io/tags/elisp/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/elisp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>emacs 笔记</title>
-      <link>http://ZackZK.github.io/post/2016-11-18-emacs-notes/</link>
+      <link>http://www.kotlinor.com/post/2016-11-18-emacs-notes/</link>
       <pubDate>Fri, 18 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://ZackZK.github.io/post/2016-11-18-emacs-notes/</guid>
+      <guid>http://www.kotlinor.com/post/2016-11-18-emacs-notes/</guid>
       <description>emacs 设置代理 lisp (setq url-proxy-services &#39;((&amp;quot;no_proxy&amp;quot; . &amp;quot;^\\(localhost\\|10.*\\)&amp;quot;) (&amp;quot;http&amp;quot; . &amp;quot;proxy.com:8080&amp;quot;) (&amp;quot;https&amp;quot; . &amp;quot;proxy.com:8080&amp;quot;))) 
 emacs 书签 与存储光标位置的寄存器略有不同 书签可以使用单词来命名，而不限于一个字符。起一个容易记住的名字 退出 Emacs 后，书签不会消失，下次还可以使用
 C-x r m (name) M-x bookmark-set 设置书签 C-x r b (name) M-x bookmark-jump 跳转到书签 C-x r l M-x bookmark-bmenu-list 书签列表 M-x bookmark-delete 删除书签 M-x bookmark-load 读取存储书签文件

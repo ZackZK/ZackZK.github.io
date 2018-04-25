@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Relative Path on 我的Blog</title>
-    <link>http://ZackZK.github.io/tags/relative-path/</link>
+    <link>http://www.kotlinor.com/tags/relative-path/</link>
     <description>Recent content in Relative Path on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Thu, 23 Jul 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://ZackZK.github.io/tags/relative-path/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/relative-path/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>python 相对路径文件的操作</title>
-      <link>http://ZackZK.github.io/post/2015-07-23-python-relative-file-path-operation/</link>
+      <link>http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://ZackZK.github.io/post/2015-07-23-python-relative-file-path-operation/</guid>
+      <guid>http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/</guid>
       <description>python项目中，如果pyton代码需要访问某个外部文件，该文件位于代码文件的某个相对路径位置，我们可以在代码中使用相对路径来访问该文件。 比如图中的代码结构： sample.py文件中，如果要访问配置文件server.ini文件，就可以用 &amp;ldquo;../conf/server.ini&amp;rdquo;来进行访问。
 但是经常的问题是，该python文件又被别的目录的python文件import引用， 此时相对路径就会出错。这是因为此时相对路径是基于当前运行脚本的路径来计算的， 如果被引用的python文件和调用文件不在同一个目录，则相对路径就会失效。
 比如，我们的例子中， sample.py文件内容如下:

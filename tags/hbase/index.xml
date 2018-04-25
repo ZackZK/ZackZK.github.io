@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hbase on 我的Blog</title>
-    <link>http://ZackZK.github.io/tags/hbase/</link>
+    <link>http://www.kotlinor.com/tags/hbase/</link>
     <description>Recent content in Hbase on 我的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
     <lastBuildDate>Fri, 11 Sep 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://ZackZK.github.io/tags/hbase/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.kotlinor.com/tags/hbase/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>spark读取hbase内容及在集群环境下的配置</title>
-      <link>http://ZackZK.github.io/post/2015-09-11-spark-load-hbase/</link>
+      <link>http://www.kotlinor.com/post/2015-09-11-spark-load-hbase/</link>
       <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://ZackZK.github.io/post/2015-09-11-spark-load-hbase/</guid>
+      <guid>http://www.kotlinor.com/post/2015-09-11-spark-load-hbase/</guid>
       <description>spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
 首先，加入下面依赖：
 &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-core_2.10&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-common&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-client&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-server&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
