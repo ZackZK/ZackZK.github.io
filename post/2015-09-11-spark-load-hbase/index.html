@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>spark读取hbase内容及在集群环境下的配置</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Zack" />
+  <meta name="description" content="spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
+首先，加入下面依赖：
+&amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-core_2.10&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-common&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-client&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-server&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
+import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbase.util.Base64; import org.apache.hadoop.hbase.util.Bytes; import org.apache.spark.api.java.JavaSparkContext; import org.apache.spark.api.java.JavaRDD; import org.apache.spark.SparkConf; import org.apache.spark.api.java.function.Function; import org.apache.spark.api.java.function.Function2; import org.apache.hadoop.conf.Configuration; import org.apache.hadoop.hbase.client.Scan; import org.apache.hadoop.hbase.client.Result; import org.apache.hadoop.hbase.io.ImmutableBytesWritable; import org.apache.hadoop.hbase.mapreduce.TableInputFormat; import org.apache.spark.api.java.JavaPairRDD; import org.apache.hadoop.hbase.protobuf.ProtobufUtil; import org.apache.hadoop.hbase.protobuf.generated.ClientProtos; import org.apache.spark.api.java.function.PairFunction; import scala.Tuple10; import scala.Tuple2; import java.io.IOException; import java.util.ArrayList; import java." />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="spark读取hbase内容及在集群环境下的配置" />
+    <meta name="twitter:description" content="spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
+首先，加入下面依赖：
+&amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-core_2.10&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-common&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-client&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-server&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
+import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbase.util.Base64; import org.apache.hadoop.hbase.util.Bytes; import org.apache.spark.api.java.JavaSparkContext; import org.apache.spark.api.java.JavaRDD; import org.apache.spark.SparkConf; import org.apache.spark.api.java.function.Function; import org.apache.spark.api.java.function.Function2; import org.apache.hadoop.conf.Configuration; import org.apache.hadoop.hbase.client.Scan; import org.apache.hadoop.hbase.client.Result; import org.apache.hadoop.hbase.io.ImmutableBytesWritable; import org.apache.hadoop.hbase.mapreduce.TableInputFormat; import org.apache.spark.api.java.JavaPairRDD; import org.apache.hadoop.hbase.protobuf.ProtobufUtil; import org.apache.hadoop.hbase.protobuf.generated.ClientProtos; import org.apache.spark.api.java.function.PairFunction; import scala.Tuple10; import scala.Tuple2; import java.io.IOException; import java.util.ArrayList; import java." />
+    <meta name="twitter:image" content="http://ZackZK.github.io/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="spark读取hbase内容及在集群环境下的配置" />
+  <meta property="og:description" content="spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
+首先，加入下面依赖：
+&amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spark-core_2.10&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-common&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-client&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.hbase&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;hbase-server&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.1.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;/dependencies&amp;gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
+import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbase.util.Base64; import org.apache.hadoop.hbase.util.Bytes; import org.apache.spark.api.java.JavaSparkContext; import org.apache.spark.api.java.JavaRDD; import org.apache.spark.SparkConf; import org.apache.spark.api.java.function.Function; import org.apache.spark.api.java.function.Function2; import org.apache.hadoop.conf.Configuration; import org.apache.hadoop.hbase.client.Scan; import org.apache.hadoop.hbase.client.Result; import org.apache.hadoop.hbase.io.ImmutableBytesWritable; import org.apache.hadoop.hbase.mapreduce.TableInputFormat; import org.apache.spark.api.java.JavaPairRDD; import org.apache.hadoop.hbase.protobuf.ProtobufUtil; import org.apache.hadoop.hbase.protobuf.generated.ClientProtos; import org.apache.spark.api.java.function.PairFunction; import scala.Tuple10; import scala.Tuple2; import java.io.IOException; import java.util.ArrayList; import java." />
+  <meta property="og:url" content="http://ZackZK.github.io/post/2015-09-11-spark-load-hbase/" />
+  <meta property="og:image" content="http://ZackZK.github.io/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.38.2" />
+
+
+<link rel="canonical" href="http://ZackZK.github.io/post/2015-09-11-spark-load-hbase/" />
+<link rel="alternative" href="http://ZackZK.github.io/index.xml" title="我的Blog" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+<meta name="google-site-verification" content="_moDmnnBNVLBN1rzNxyGUGdPHE20YgbmrtzLIbxaWFc" />
+<meta name="msvalidate.01" content="22596E34341DD1D17D6022C44647E587" />
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="我的Blog" />
+<meta name="msapplication-tooltip" content="我的Blog" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="http://ZackZK.github.io/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="http://ZackZK.github.io/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="http://ZackZK.github.io/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="http://ZackZK.github.io/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="http://ZackZK.github.io/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="http://ZackZK.github.io/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="http://ZackZK.github.io/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+        <a title="Go to comments" class="to-comment" href="#disqus_thread"><span class="icon icon-comment"></span></a>
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="http://ZackZK.github.io/images/logoko.png" alt="Avatar">
+  
+  <h2 class="title">我的Blog</h2>
+  
+  <p class="subtitle">~ Keep It Simple &amp; Stupid ~</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="http://ZackZK.github.io/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://github.com/ZackZK">Works</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://ZackZK.github.io/tags/">Tags</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="http://ZackZK.github.io/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">spark读取hbase内容及在集群环境下的配置</h1>
+      <p class="post-meta">@Zack · Sep 11, 2015 · 4 min read</p>
+    </header>
+    <article class="post-content">
+
+<h2 id="spark读取hbase">spark读取hbase</h2>
+
+<p>对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：</p>
+
+<p>首先，加入下面依赖：</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.spark<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spark-core_2.10<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.4.1<span style="color:#f92672">&lt;/version&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>provided<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.hbase<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>hbase-common<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.1.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.hbase<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>hbase-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.1.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.hbase<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>hbase-server<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.1.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span></code></pre></div>
+
+<p>下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.apache.hadoop.hbase.HBaseConfiguration<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.util.Base64<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.util.Bytes<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.JavaSparkContext<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.JavaRDD<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.SparkConf<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.function.Function<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.function.Function2<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.conf.Configuration<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.client.Scan<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.client.Result<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.io.ImmutableBytesWritable<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.mapreduce.TableInputFormat<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.JavaPairRDD<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.protobuf.ProtobufUtil<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.hadoop.hbase.protobuf.generated.ClientProtos<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> org.apache.spark.api.java.function.PairFunction<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> scala.Tuple10<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> scala.Tuple2<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import</span> java.io.IOException<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">* hbase content:
+</span><span style="color:#75715e">* hbase(main):003:0&gt; scan &#39;scores&#39;
+</span><span style="color:#75715e">ROW                             COLUMN+CELL
+</span><span style="color:#75715e"> Jim                            column=course:art, timestamp=1441549968185, value=80
+</span><span style="color:#75715e"> Jim                            column=course:math, timestamp=1441549968167, value=89
+</span><span style="color:#75715e"> Jim                            column=grade:, timestamp=1441549968142, value=4
+</span><span style="color:#75715e"> Tom                            column=course:art, timestamp=1441549912222, value=88
+</span><span style="color:#75715e"> Tom                            column=course:math, timestamp=1441549842348, value=97
+</span><span style="color:#75715e"> Tom                            column=grade:, timestamp=1441549820516, value=5
+</span><span style="color:#75715e">2 row(s) in 0.1330 seconds
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">spark_hbase_main</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String appName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hello&#34;</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SparkConf sparkConf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SparkConf<span style="color:#f92672">().</span><span style="color:#a6e22e">setAppName</span><span style="color:#f92672">(</span>appName<span style="color:#f92672">);</span>
+        JavaSparkContext jsc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JavaSparkContext<span style="color:#f92672">(</span>sparkConf<span style="color:#f92672">);</span>
+
+        Configuration conf <span style="color:#f92672">=</span> HBaseConfiguration<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">();</span>
+
+        Scan scan <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scan<span style="color:#f92672">();</span>
+        scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addFamily</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">));</span>
+        scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;art&#34;</span><span style="color:#f92672">));</span>
+        scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;math&#34;</span><span style="color:#f92672">));</span>
+
+        String scanToString <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            ClientProtos<span style="color:#f92672">.</span><span style="color:#a6e22e">Scan</span> proto <span style="color:#f92672">=</span> ProtobufUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toScan</span><span style="color:#f92672">(</span>scan<span style="color:#f92672">);</span>
+            scanToString <span style="color:#f92672">=</span> Base64<span style="color:#f92672">.</span><span style="color:#a6e22e">encodeBytes</span><span style="color:#f92672">(</span>proto<span style="color:#f92672">.</span><span style="color:#a6e22e">toByteArray</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException io<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>io<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 2<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                String tableName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;scores&#34;</span><span style="color:#f92672">;</span>
+                conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">INPUT_TABLE</span><span style="color:#f92672">,</span> tableName<span style="color:#f92672">);</span>
+                conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">SCAN</span><span style="color:#f92672">,</span> scanToString<span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">//获得hbase查询结果Result
+</span><span style="color:#75715e"></span>                JavaPairRDD<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;</span> hBaseRDD <span style="color:#f92672">=</span> jsc<span style="color:#f92672">.</span><span style="color:#a6e22e">newAPIHadoopRDD</span><span style="color:#f92672">(</span>conf<span style="color:#f92672">,</span>
+                        TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> ImmutableBytesWritable<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
+                        Result<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">/* 生成类似 [(Jim, 80, 89), (Tom, 88, 97)] 的RDD */</span>
+                JavaPairRDD<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;</span> art_scores <span style="color:#f92672">=</span> hBaseRDD<span style="color:#f92672">.</span><span style="color:#a6e22e">mapToPair</span><span style="color:#f92672">(</span>
+                        <span style="color:#66d9ef">new</span> PairFunction<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;,</span> String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;()</span> <span style="color:#f92672">{</span>
+                            <span style="color:#a6e22e">@Override</span>
+                            <span style="color:#66d9ef">public</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">call</span><span style="color:#f92672">(</span>Tuple2<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;</span> results<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+
+                                List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;();</span>
+
+                                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> art_score <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;art&#34;</span><span style="color:#f92672">));</span>
+                                <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> math_score <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;math&#34;</span><span style="color:#f92672">));</span>
+
+                                <span style="color:#75715e">/* 注意： Hbase里存的数据以Byte Array形式存储， 需要使用Integer.parseInt(Bytes.toString(art_score))将数据内容转化为整型
+</span><span style="color:#75715e">                                * Integer.parseInt(price.toString()) 会得到错误答案 */</span>
+                                list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>art_score<span style="color:#f92672">)));</span>
+                                list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>math_score<span style="color:#f92672">)));</span>
+
+                                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>results<span style="color:#f92672">.</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">()),</span> list<span style="color:#f92672">);</span>
+                            <span style="color:#f92672">}</span>
+                        <span style="color:#f92672">}</span>
+                <span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">/* 如果是使用Java8， 可以简化成下面的形式: 
+</span><span style="color:#75715e">                JavaPairRDD&lt;Integer, Double&gt; stock_price_pair = hBaseRDD.mapToPair(
+</span><span style="color:#75715e">                    (results) -&gt; {
+</span><span style="color:#75715e">                          List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">                          byte[] art_score = results._2().getValue(Bytes.toBytes(&#34;course&#34;), Bytes.toBytes(&#34;art&#34;));
+</span><span style="color:#75715e">                          byte[] math_score = results._2().getValue(Bytes.toBytes(&#34;course&#34;), Bytes.toBytes(&#34;math&#34;));
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">                          list.add(Integer.parseInt(Bytes.toString(art_score)));
+</span><span style="color:#75715e">                          list.add(Integer.parseInt(Bytes.toString(math_score)));
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">                          return new Tuple2&lt;String, List&lt;Integer&gt;&gt;(Bytes.toString(results._1().get()), list);
+</span><span style="color:#75715e">                    }
+</span><span style="color:#75715e">                )
+</span><span style="color:#75715e">                */</span>
+
+                <span style="color:#75715e">/* 笛卡尔乘积，生成 [((Jim, 80, 89), (Tom, 88, 97)), ((Tom, 88, 97), (Jim, 80, 89)), ((Jim, 80, 89), (Jim, 80, 89)),
+</span><span style="color:#75715e">                ((Tom, 88, 97), (Tom, 88, 97))] 的RDD */</span><span style="color:#f92672">]</span> <span style="color:#f92672">*/</span>
+                JavaPairRDD<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> cart <span style="color:#f92672">=</span> art_scores<span style="color:#f92672">.</span><span style="color:#a6e22e">cartesian</span><span style="color:#f92672">(</span>art_scores<span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">/* 利用row key的大小关系去除重复的组合关系， 生成 [((Jim, 80, 89), (Tom, 88, 97))] */</span>
+                JavaPairRDD<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> cart2 <span style="color:#f92672">=</span> cart<span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>
+                        <span style="color:#66d9ef">new</span> Function<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;,</span> Boolean<span style="color:#f92672">&gt;()</span> <span style="color:#f92672">{</span>
+                            <span style="color:#66d9ef">public</span> Boolean <span style="color:#a6e22e">call</span><span style="color:#f92672">(</span>Tuple2<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> tuple2Tuple2Tuple2<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+
+                                <span style="color:#66d9ef">return</span> tuple2Tuple2Tuple2<span style="color:#f92672">.</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>tuple2Tuple2Tuple2<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">())</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">;</span>
+                            <span style="color:#f92672">}</span>
+                        <span style="color:#f92672">}</span>
+                <span style="color:#f92672">);</span>
+
+                <span style="color:#75715e">/* 得到最终结果 [((Jim, 80, 89), (Tom, 88, 97))] */</span>
+                cart_all <span style="color:#f92672">=</span> cart2<span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">();</span>
+
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span></code></pre></div></p>
+
+<p>编译运行时，Hbase的一些库可能会找不到，一种办法是在命令行中加入Hbase相应的jar包，比如：</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">spark-submit --master spark://127.0.0.0:7078 --class spark_hbase_main --jars <span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-common-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-client-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/guava-12.0.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-protocol-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-server-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/htrace-core-3.1.0-incubating.jar spark-hbase-1.0.jar</code></pre></div></p>
+
+<p>如果缺少相应的Hbase的jar包，比如缺少hbase-common-1.0.1.1.jar会出现下面的错误：</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
+        at java.lang.Class.forName0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.lang.Class.forName<span style="color:#f92672">(</span>Class.java:278<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:634<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.doRunMain$1<span style="color:#f92672">(</span>SparkSubmit.scala:170<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.submit<span style="color:#f92672">(</span>SparkSubmit.scala:193<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.main<span style="color:#f92672">(</span>SparkSubmit.scala:112<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit.main<span style="color:#f92672">(</span>SparkSubmit.scala<span style="color:#f92672">)</span>
+Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.protobuf.generated.ClientProtos$Scan
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:366<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:355<span style="color:#f92672">)</span>
+        at java.security.AccessController.doPrivileged<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">7</span> more</code></pre></div>
+
+<p>缺少hbase-protocol-1.0.1.1.jar会报如下错误：</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
+        at java.lang.Class.forName0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.lang.Class.forName<span style="color:#f92672">(</span>Class.java:278<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:634<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.doRunMain$1<span style="color:#f92672">(</span>SparkSubmit.scala:170<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.submit<span style="color:#f92672">(</span>SparkSubmit.scala:193<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.main<span style="color:#f92672">(</span>SparkSubmit.scala:112<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit.main<span style="color:#f92672">(</span>SparkSubmit.scala<span style="color:#f92672">)</span>
+Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.protobuf.generated.ClientProtos$Scan
+        at java.net.URLClassLoader$1.ru
+        n<span style="color:#f92672">(</span>URLClassLoader.java:366<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:355<span style="color:#f92672">)</span>
+        at java.security.AccessController.doPrivileged<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">7</span> more</code></pre></div></p>
+
+<p>缺少hbase-server-1.0.1.1.jar会报如下错误：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/mapreduce/TableInputFormat
+        at spark_hbase_main.main<span style="color:#f92672">(</span>spark_hbase_main.java:129<span style="color:#f92672">)</span>
+        at sun.reflect.NativeMethodAccessorImpl.invoke0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at sun.reflect.NativeMethodAccessorImpl.invoke<span style="color:#f92672">(</span>NativeMethodAccessorImpl.java:57<span style="color:#f92672">)</span>
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke<span style="color:#f92672">(</span>DelegatingMethodAccessorImpl.java:43<span style="color:#f92672">)</span>
+        at java.lang.reflect.Method.invoke<span style="color:#f92672">(</span>Method.java:606<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:665<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.doRunMain$1<span style="color:#f92672">(</span>SparkSubmit.scala:170<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.submit<span style="color:#f92672">(</span>SparkSubmit.scala:193<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.main<span style="color:#f92672">(</span>SparkSubmit.scala:112<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit.main<span style="color:#f92672">(</span>SparkSubmit.scala<span style="color:#f92672">)</span>
+Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.mapreduce.TableInputFormat
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:366<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:355<span style="color:#f92672">)</span>
+        at java.security.AccessController.doPrivileged<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">10</span> more</code></pre></div></p>
+
+<p>缺少htrace-core-3.1.0-incubating.jar会报如下错误：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">15</span>/09/12 <span style="color:#ae81ff">16</span>:56:59 ERROR TableInputFormat: java.io.IOException: java.lang.reflect.InvocationTargetException
+        at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:240<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:218<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:119<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.mapreduce.TableInputFormat.initialize<span style="color:#f92672">(</span>TableInputFormat.java:183<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.mapreduce.TableInputFormatBase.getSplits<span style="color:#f92672">(</span>TableInputFormatBase.java:241<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.mapreduce.TableInputFormat.getSplits<span style="color:#f92672">(</span>TableInputFormat.java:237<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.NewHadoopRDD.getPartitions<span style="color:#f92672">(</span>NewHadoopRDD.scala:95<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply<span style="color:#f92672">(</span>RDD.scala:219<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply<span style="color:#f92672">(</span>RDD.scala:217<span style="color:#f92672">)</span>
+        at scala.Option.getOrElse<span style="color:#f92672">(</span>Option.scala:120<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD.partitions<span style="color:#f92672">(</span>RDD.scala:217<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.MapPartitionsRDD.getPartitions<span style="color:#f92672">(</span>MapPartitionsRDD.scala:32<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply<span style="color:#f92672">(</span>RDD.scala:219<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply<span style="color:#f92672">(</span>RDD.scala:217<span style="color:#f92672">)</span>
+        at scala.Option.getOrElse<span style="color:#f92672">(</span>Option.scala:120<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD.partitions<span style="color:#f92672">(</span>RDD.scala:217<span style="color:#f92672">)</span>
+        at org.apache.spark.Partitioner$.defaultPartitioner<span style="color:#f92672">(</span>Partitioner.scala:65<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.PairRDDFunctions$$anonfun$groupByKey$3.apply<span style="color:#f92672">(</span>PairRDDFunctions.scala:587<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.PairRDDFunctions$$anonfun$groupByKey$3.apply<span style="color:#f92672">(</span>PairRDDFunctions.scala:587<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDDOperationScope$.withScope<span style="color:#f92672">(</span>RDDOperationScope.scala:147<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDDOperationScope$.withScope<span style="color:#f92672">(</span>RDDOperationScope.scala:108<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.RDD.withScope<span style="color:#f92672">(</span>RDD.scala:286<span style="color:#f92672">)</span>
+        at org.apache.spark.rdd.PairRDDFunctions.groupByKey<span style="color:#f92672">(</span>PairRDDFunctions.scala:586<span style="color:#f92672">)</span>
+        at org.apache.spark.api.java.JavaPairRDD.groupByKey<span style="color:#f92672">(</span>JavaPairRDD.scala:547<span style="color:#f92672">)</span>
+        at spark_hbase_main.main<span style="color:#f92672">(</span>spark_hbase_main.java:167<span style="color:#f92672">)</span>
+        at sun.reflect.NativeMethodAccessorImpl.invoke0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at sun.reflect.NativeMethodAccessorImpl.invoke<span style="color:#f92672">(</span>NativeMethodAccessorImpl.java:57<span style="color:#f92672">)</span>
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke<span style="color:#f92672">(</span>DelegatingMethodAccessorImpl.java:43<span style="color:#f92672">)</span>
+        at java.lang.reflect.Method.invoke<span style="color:#f92672">(</span>Method.java:606<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:665<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.doRunMain$1<span style="color:#f92672">(</span>SparkSubmit.scala:170<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.submit<span style="color:#f92672">(</span>SparkSubmit.scala:193<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit$.main<span style="color:#f92672">(</span>SparkSubmit.scala:112<span style="color:#f92672">)</span>
+        at org.apache.spark.deploy.SparkSubmit.main<span style="color:#f92672">(</span>SparkSubmit.scala<span style="color:#f92672">)</span>
+Caused by: java.lang.reflect.InvocationTargetException
+        at sun.reflect.NativeConstructorAccessorImpl.newInstance0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at sun.reflect.NativeConstructorAccessorImpl.newInstance<span style="color:#f92672">(</span>NativeConstructorAccessorImpl.java:57<span style="color:#f92672">)</span>
+        at sun.reflect.DelegatingConstructorAccessorImpl.newInstance<span style="color:#f92672">(</span>DelegatingConstructorAccessorImpl.java:45<span style="color:#f92672">)</span>
+        at java.lang.reflect.Constructor.newInstance<span style="color:#f92672">(</span>Constructor.java:526<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:238<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">33</span> more
+Caused by: java.lang.NoClassDefFoundError: org/apache/htrace/Trace
+        at org.apache.hadoop.hbase.zookeeper.RecoverableZooKeeper.exists<span style="color:#f92672">(</span>RecoverableZooKeeper.java:218<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.zookeeper.ZKUtil.checkExists<span style="color:#f92672">(</span>ZKUtil.java:481<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.zookeeper.ZKClusterId.readClusterIdZNode<span style="color:#f92672">(</span>ZKClusterId.java:65<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ZooKeeperRegistry.getClusterId<span style="color:#f92672">(</span>ZooKeeperRegistry.java:86<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ConnectionManager$HConnectionImplementation.retrieveClusterId<span style="color:#f92672">(</span>ConnectionManager.java:833<span style="color:#f92672">)</span>
+        at org.apache.hadoop.hbase.client.ConnectionManager$HConnectionImplementation.&lt;init&gt;<span style="color:#f92672">(</span>ConnectionManager.java:623<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">38</span> more
+Caused by: java.lang.ClassNotFoundException: org.apache.htrace.Trace
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:366<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader$1.run<span style="color:#f92672">(</span>URLClassLoader.java:355<span style="color:#f92672">)</span>
+        at java.security.AccessController.doPrivileged<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+        at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
+        at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
+        ... <span style="color:#ae81ff">44</span> more</code></pre></div></p>
+
+<h2 id="spark集群环境下面读取hbase">spark集群环境下面读取hbase</h2>
+
+<p>如果要在集群上运行，会发现worker node访问不了hbase内容。原因我们之前的例子里没有指定hbase的地址信息。
+加入下面代码：</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.quorum&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;18.18.18.18&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">//指定ip地址
+</span><span style="color:#75715e"></span>  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.property.clientPort&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;2182&#34;</span><span style="color:#f92672">);</span> <span style="color:#f92672">//</span> zookeeper的端口号</code></pre></div></p>
+
+<p>注意，在调试过程中，还是发现如果spark的其他worker运行在其他node上，hbase还是无法正常访问。打开spark的debug级别的log，
+在spark目录conf/log4j.properties，修改：</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">log4j<span style="color:#f92672">.</span><span style="color:#a6e22e">rootCategory</span><span style="color:#f92672">=</span>DEBUG<span style="color:#f92672">,</span> console</code></pre></div>
+
+<p>发现其他主机通过主机名来访问hbase服务器，但是由于DNS或者/etc/hosts中并没有该主机信息，导致连接不上。修改worker主机上/etc/hosts文件
+加入“18.18.18.18 hbase主机名”解决问题。</p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="http://ZackZK.github.io/tags/spark"><span class="tag">Spark</span></a></li>
+        
+          <li><a href="http://ZackZK.github.io/tags/hbase"><span class="tag">Hbase</span></a></li>
+        
+          <li><a href="http://ZackZK.github.io/tags/spark-cluster"><span class="tag">Spark Cluster</span></a></li>
+        
+          <li><a href="http://ZackZK.github.io/tags/spark-configuration"><span class="tag">Spark Configuration</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        ©除非特殊说明，欢迎转载This post was published <strong>956</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
+      </p>
+    </footer>
+    
+      <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "disqus_shortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 我的Blog</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="http://ZackZK.github.io/js/bundle.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-XXXXXXXX-X', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+  </body>
+</html>

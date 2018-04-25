@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>ansible使用问题总结</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Zack" />
+  <meta name="description" content="1. Network is unreachable问题 问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+解决方法 ： 使用ansible的environment关键字来设置proxy
+见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
+官方的例子
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="ansible使用问题总结" />
+    <meta name="twitter:description" content="1. Network is unreachable问题 问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+解决方法 ： 使用ansible的environment关键字来设置proxy
+见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
+官方的例子
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+    <meta name="twitter:image" content="http://ZackZK.github.io/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="ansible使用问题总结" />
+  <meta property="og:description" content="1. Network is unreachable问题 问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题
+原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量
+解决方法 ： 使用ansible的environment关键字来设置proxy
+见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
+官方的例子
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+  <meta property="og:url" content="http://ZackZK.github.io/post/2016-10-24-ansible-notes/" />
+  <meta property="og:image" content="http://ZackZK.github.io/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.38.2" />
+
+
+<link rel="canonical" href="http://ZackZK.github.io/post/2016-10-24-ansible-notes/" />
+<link rel="alternative" href="http://ZackZK.github.io/index.xml" title="我的Blog" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+<meta name="google-site-verification" content="_moDmnnBNVLBN1rzNxyGUGdPHE20YgbmrtzLIbxaWFc" />
+<meta name="msvalidate.01" content="22596E34341DD1D17D6022C44647E587" />
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="我的Blog" />
+<meta name="msapplication-tooltip" content="我的Blog" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="http://ZackZK.github.io/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="http://ZackZK.github.io/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="http://ZackZK.github.io/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="http://ZackZK.github.io/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="http://ZackZK.github.io/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="http://ZackZK.github.io/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="http://ZackZK.github.io/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+        <a title="Go to comments" class="to-comment" href="#disqus_thread"><span class="icon icon-comment"></span></a>
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="http://ZackZK.github.io/images/logoko.png" alt="Avatar">
+  
+  <h2 class="title">我的Blog</h2>
+  
+  <p class="subtitle">~ Keep It Simple &amp; Stupid ~</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="http://ZackZK.github.io/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://github.com/ZackZK">Works</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://ZackZK.github.io/tags/">Tags</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="http://ZackZK.github.io/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">ansible使用问题总结</h1>
+      <p class="post-meta">@Zack · Oct 24, 2016 · 2 min read</p>
+    </header>
+    <article class="post-content">
+
+<h2 id="1-network-is-unreachable问题">1. Network is unreachable问题</h2>
+
+<p>问题 ： 使用apt-get在目标主机可正常安装，但是通过ansible的apt模块报 Network is unreachable的问题</p>
+
+<p>原因 ： 目标主机上访问外网需要设置代理， ansible默认不会执行目标主机的.bashrc设置环境变量</p>
+
+<p>解决方法 ： 使用ansible的environment关键字来设置proxy</p>
+
+<p>见官方文档： <a href="http://docs.ansible.com/ansible/playbooks_environment.html">http://docs.ansible.com/ansible/playbooks_environment.html</a></p>
+
+<p>官方的例子</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: all
+  remote_user: root
+
+  tasks:
+
+    - apt: name<span style="color:#f92672">=</span>apache2 state<span style="color:#f92672">=</span>installed
+      environment:
+      http_proxy: http://proxy.example.com:8080
+      </code></pre></div>
+
+<p>也可以使用变量：</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: all
+  remote_user: root
+
+  <span style="color:#75715e"># here we make a variable named &#34;proxy_env&#34; that is a dictionary
+</span><span style="color:#75715e"></span>  vars:
+    proxy_env:
+      http_proxy: http://proxy.example.com:8080
+
+  tasks:
+
+    - apt: name<span style="color:#f92672">=</span>apache2 state<span style="color:#f92672">=</span>installed
+      environment: <span style="color:#e6db74">&#34;{{proxy_env}}&#34;</span></code></pre></div>
+
+<h2 id="2-安装mongodb">2. 安装mongodb</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+- name: download key
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:<span style="color:#ae81ff">80</span> id=EA312927 state=present
+
+- name : <span style="color:#ae81ff">2</span>. update Repo
+  apt_repository: repo=<span style="color:#e6db74">&#39;deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse&#39;</span> state=present
+
+- name: <span style="color:#ae81ff">3</span>. install mongodb
+  apt: name=mongodb-org state=present 
+
+- name: <span style="color:#ae81ff">4</span>. start mongodb
+  service: name=mongod state=started enabled=yes
+
+- name: <span style="color:#ae81ff">5</span>. create mongodb user
+  mongodb_user: database=algo name=algo password=algo state=present</code></pre></div>
+
+<p>运行ansible-playbook到第三步时碰到这样的错误“E: There were unauthenticated packages and -y was used without &ndash;allow-unauthenticated”
+查看apt模块说明，需要加 allow_unauthenticated=yes 参数</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apt: name=mongodb-org state=present allow_unauthenticated=yes</code></pre></div>
+
+<h2 id="3-编译安装mesos">3. 编译安装mesos</h2>
+
+<p>根据<a href="http://mesos.apache.org/gettingstarted/">http://mesos.apache.org/gettingstarted/</a> 的步骤：</p>
+
+<ol>
+<li>下载解压mesos源代码</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: download mesos source code
+  get_url:
+    url: http://archive.apache.org/dist/mesos/<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1</span>/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1.</span>tar.gz
+    dest: /var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1.</span>tar.gz
+    force: no
+
+- name: untar mesos source
+  unarchive: src=/var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1.</span>tar.gz dest=/var/log/ remote_src=yes copy=no</code></pre></div>
+
+<p>对于当前使用的ansible 2.1.2.0，
+get_url模块经过测试验证如果目标地址是目录的话，force选项即使为no也不会产生任何作用，即如果 “dest: /var/log/” 将mesos代码放在/var/log/目录下，但是未指定目标文件名，虽然force=no，get_url也会重新下载</p>
+
+<p>unarchive模块的remote_src和copy选项冲突的问题，虽然ansible官方的指导手册上说明如果使用 remote_src=yes 的话，就会去远程服务器上访问文件，但是经过验证，在2.1.2.0上，仍然是访问ansible主机上文件。加了copy=no才解决。应该在2.2以后版本解决了该问题</p>
+
+<ol>
+<li>在ubuntu上要安装一系列依赖：</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: install System Requirements
+  apt: name={{item}} state=present
+  with_items:
+    - tar
+    - wget
+    - git
+    - openjdk-<span style="color:#ae81ff">7</span>-jdk
+    - autoconf
+    - libtool
+    - build-essential
+    - python-dev
+    - libcurl4-nss-dev
+    - libsasl2-dev
+    - libsasl2-modules
+    - maven
+    - libapr1-dev
+    - libsvn-dev
+    - zlib1g-dev                <span style="color:#75715e"># 官方文档中没有</span></code></pre></div>
+
+<ol>
+<li>编译安装mesos</li>
+</ol>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: configure mesos
+  command: <span style="color:#e6db74">&#39;./configure chdir=/var/log/mesos-1.0.1&#39;</span>
+
+- name: make mesos
+  make: chdir=/var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1</span>
+  </code></pre></div>
+
+<p>编译过程中碰到maven编译出错，报下载不了pom文件，这个是因为maven不使用系统默认的环境变量。参考<a href="https://maven.apache.org/guides/mini/guide-proxies.html">https://maven.apache.org/guides/mini/guide-proxies.html</a>, 有两种方式为maven添加代理。这里因为不是直接命令行maven编译，所以采用maven配置文件的方式。创建settings.xml文件，内如如下：
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;settings&gt;</span>
+  .
+  .
+  <span style="color:#f92672">&lt;proxies&gt;</span>
+   <span style="color:#f92672">&lt;proxy&gt;</span>
+      <span style="color:#f92672">&lt;id&gt;</span>example-proxy<span style="color:#f92672">&lt;/id&gt;</span>
+      <span style="color:#f92672">&lt;active&gt;</span>true<span style="color:#f92672">&lt;/active&gt;</span>
+      <span style="color:#f92672">&lt;protocol&gt;</span>http<span style="color:#f92672">&lt;/protocol&gt;</span>
+      <span style="color:#f92672">&lt;host&gt;</span>proxy.example.com<span style="color:#f92672">&lt;/host&gt;</span>
+      <span style="color:#f92672">&lt;port&gt;</span>8080<span style="color:#f92672">&lt;/port&gt;</span>
+      <span style="color:#f92672">&lt;username&gt;</span>proxyuser<span style="color:#f92672">&lt;/username&gt;</span>
+      <span style="color:#f92672">&lt;password&gt;</span>somepassword<span style="color:#f92672">&lt;/password&gt;</span>
+      <span style="color:#f92672">&lt;nonProxyHosts&gt;</span>www.google.com|*.example.com<span style="color:#f92672">&lt;/nonProxyHosts&gt;</span>
+    <span style="color:#f92672">&lt;/proxy&gt;</span>
+  <span style="color:#f92672">&lt;/proxies&gt;</span>
+  .
+  .
+<span style="color:#f92672">&lt;/settings&gt;</span></code></pre></div></p>
+
+<p>将示例中相关参数根据实际情况修改。在编译mesos之前，将该配置文件拷贝到远程主机的 ~/.m2/setting.xml</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: add proxy for maven
+  template: src=settings.xml dest=settings.xml</code></pre></div>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="http://ZackZK.github.io/tags/ansible"><span class="tag">Ansible</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        ©除非特殊说明，欢迎转载This post was published <strong>548</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
+      </p>
+    </footer>
+    
+      <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "disqus_shortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 我的Blog</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="http://ZackZK.github.io/js/bundle.js"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-XXXXXXXX-X', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+  </body>
+</html>
