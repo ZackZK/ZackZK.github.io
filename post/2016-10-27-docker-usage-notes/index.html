@@ -28,7 +28,7 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
     <meta name="twitter:description" content="1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
  为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
 Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy." />
-    <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
+    <meta name="twitter:image" content="http://ZackZK.github.io/img/avatar.jpg" />
   
 
   
@@ -37,8 +37,8 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
   <meta property="og:description" content="1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
  为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
 Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy." />
-  <meta property="og:url" content="http://www.kotlinor.com/post/2016-10-27-docker-usage-notes/" />
-  <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
+  <meta property="og:url" content="http://ZackZK.github.io/post/2016-10-27-docker-usage-notes/" />
+  <meta property="og:image" content="http://ZackZK.github.io/img/avatar.jpg" />
 
 
 
@@ -46,8 +46,8 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
 <meta name="generator" content="Hugo 0.38.2" />
 
 
-<link rel="canonical" href="http://www.kotlinor.com/post/2016-10-27-docker-usage-notes/" />
-<link rel="alternative" href="http://www.kotlinor.com/index.xml" title="我的Blog" type="application/atom+xml" />
+<link rel="canonical" href="http://ZackZK.github.io/post/2016-10-27-docker-usage-notes/" />
+<link rel="alternative" href="http://ZackZK.github.io/index.xml" title="我的Blog" type="application/atom+xml" />
 
 
 <meta name="renderer" content="webkit" />
@@ -72,18 +72,18 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
 <meta name='msapplication-navbutton-color' content="#5fbf5e" />
 <meta name="msapplication-TileColor" content="#5fbf5e" />
 <meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
-<link rel="icon" href="http://www.kotlinor.com/img/favicon.ico" />
-<link rel="icon" type="image/png" sizes="16x16" href="http://www.kotlinor.com/img/favicon-16x16.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="http://www.kotlinor.com/img/favicon-32x32.png" />
-<link rel="icon" sizes="192x192" href="http://www.kotlinor.com/img/touch-icon-android.png" />
-<link rel="apple-touch-icon" href="http://www.kotlinor.com/img/touch-icon-apple.png" />
-<link rel="mask-icon" href="http://www.kotlinor.com/img/safari-pinned-tab.svg" color="#5fbf5e" />
+<link rel="icon" href="http://ZackZK.github.io/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="http://ZackZK.github.io/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="http://ZackZK.github.io/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="http://ZackZK.github.io/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="http://ZackZK.github.io/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="http://ZackZK.github.io/img/safari-pinned-tab.svg" color="#5fbf5e" />
 
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
 
-<link rel="stylesheet" href="http://www.kotlinor.com/css/bundle.css" />
+<link rel="stylesheet" href="http://ZackZK.github.io/css/bundle.css" />
 
 
   
@@ -118,7 +118,7 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
     
     
   <header class="site-header">
-  <img class="avatar" src="http://www.kotlinor.com/images/logoko.png" alt="Avatar">
+  <img class="avatar" src="http://ZackZK.github.io/images/logoko.png" alt="Avatar">
   
   <h2 class="title">我的Blog</h2>
   
@@ -139,7 +139,7 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
             
               is-active
             ">
-            <a href="http://www.kotlinor.com/">Home</a>
+            <a href="http://ZackZK.github.io/">Home</a>
           </li>
       
         <li class="menu-item
@@ -153,7 +153,7 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
             
             
             ">
-            <a href="http://www.kotlinor.com/tags/">Tags</a>
+            <a href="http://ZackZK.github.io/tags/">Tags</a>
           </li>
       
     </ul>
@@ -205,7 +205,7 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
       
 
       <li class="social-item">
-        <a href="http://www.kotlinor.com/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+        <a href="http://ZackZK.github.io/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
       </li>
 
     </ul>
@@ -278,11 +278,11 @@ RUN apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get upgrade
       
       <ul class="post-tags">
         
-          <li><a href="http://www.kotlinor.com/tags/docker"><span class="tag">Docker</span></a></li>
+          <li><a href="http://ZackZK.github.io/tags/docker"><span class="tag">Docker</span></a></li>
         
-          <li><a href="http://www.kotlinor.com/tags/proxy"><span class="tag">Proxy</span></a></li>
+          <li><a href="http://ZackZK.github.io/tags/proxy"><span class="tag">Proxy</span></a></li>
         
-          <li><a href="http://www.kotlinor.com/tags/%E4%BB%A3%E7%90%86"><span class="tag">代理</span></a></li>
+          <li><a href="http://ZackZK.github.io/tags/%E4%BB%A3%E7%90%86"><span class="tag">代理</span></a></li>
         
       </ul>
       
@@ -346,7 +346,7 @@ RUN apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get upgrade
   });
 </script>
 
-<script src="http://www.kotlinor.com/js/bundle.js"></script>
+<script src="http://ZackZK.github.io/js/bundle.js"></script>
 
 
 <script>
