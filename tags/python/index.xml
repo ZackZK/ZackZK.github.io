@@ -30,10 +30,8 @@ exec 语法 </description>
       <guid>http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/</guid>
       <description>经常碰到需要对日期时间的字符串操作，查了又经常忘记，所以写到这里当作自己的笔记。
 datetime模块里有几个经常用到类, datetime, date, time
- date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 + 时间  datetime类 从字符串到datetime  strptime函数 &amp;gt;&amp;gt;&amp;gt; datetime.datetime.strptime(&amp;#39;06-05-2010&amp;#39;, &amp;#34;%d-%m-%Y&amp;#34;).date() datetime.date(2010, 05, 06)
- 第三方库 dateutil from dateutil import parser dt = parser.parse(&amp;#34;Aug 28 1999 12:00AM&amp;#34;)
-  可以通过pip命令安装dateutil安装 pip install python-dateutil
-| 格式化 | 意义 | 例子 | |&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;| | %d | Day of the month as a zero-padded decimal number.前面填充0的日期 | 比如00, 01, &amp;hellip;, 31 | | %m | Month as a zero-padded decimal number.</description>
+ date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 + 时间  datetime类 从字符串到datetime  strptime函数  datetime.datetime.strptime(&amp;#39;06-05-2010&amp;#39;, &amp;#34;%d-%m-%Y&amp;#34;).date() datetime.date(2010, 05, 06)  第三方库 dateutil  from dateutil import parser dt = parser.parse(&amp;#34;Aug 28 1999 12:00AM&amp;#34;) 可以通过pip命令安装dateutil安装
+pip install python-dateutil    格式化 意义 例子     %d Day of the month as a zero-padded decimal number.前面填充0的日期 比如00, 01, &amp;hellip;, 31   %m Month as a zero-padded decimal number.</description>
     </item>
     
     <item>
@@ -65,7 +63,7 @@ data = {&amp;#34;is_funda_search&amp;#34;:&amp;#34;0&amp;#34;, &amp;#34;fundavol
       
       <guid>http://www.kotlinor.com/post/2015-09-09-gevent-install-failure/</guid>
       <description>gevent的安装过程：
-1. 安装greenlet依赖 sudo pip install greenlet   2. 安装gevent sudo pip install gevent  安装过程中，碰到下面错误：
+1. 安装greenlet依赖 sudo pip install greenlet 2. 安装gevent sudo pip install gevent 安装过程中，碰到下面错误：
 gevent/gevent.core.c:9:22: fatal error: pyconfig.h: No such file or directory #include &amp;#34;pyconfig.h&amp;#34;  ^ compilation terminated. error: command &amp;#39;x86_64-linux-gnu-gcc&amp;#39; failed with exit status 1 ---------------------------------------- Cleaning up... Command /usr/bin/python -c &amp;#34;import setuptools, tokenize;__file__=&amp;#39;/tmp/pip_build_root/gevent/setup.py&amp;#39;;exec(compile(getattr(tokenize, &amp;#39;open&amp;#39;, open)(__file__).read().replace(&amp;#39;\r\n&amp;#39;, &amp;#39;\n&amp;#39;), __file__, &amp;#39;exec&amp;#39;))&amp;#34; install --record /tmp/pip-11RdgV-record/install-record.txt --single-version-externally-managed --compile failed with error code 1 in /tmp/pip_build_root/gevent Storing debug log for failure in /root/.</description>
     </item>
     
@@ -83,7 +81,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &amp;#39;../conf/server.ini&amp;#39; --&amp;gt; file_path = os.path.join(os.path.dirname(__file__) + &amp;#39;/../conf/server.ini&amp;#39;) 注意 路径前加 &amp;lsquo;/&amp;rsquo;,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</description>
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​</description>
     </item>
     
   </channel>

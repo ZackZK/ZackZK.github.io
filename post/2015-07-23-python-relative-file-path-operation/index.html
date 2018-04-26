@@ -24,7 +24,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &amp;#39;../conf/server.ini&amp;#39; --&amp;gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &amp;#39;/../conf/server.ini&amp;#39;) 注意 路径前加 &amp;lsquo;/&amp;rsquo;,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo" />
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​" />
 
   
   
@@ -39,7 +41,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &amp;#39;../conf/server.ini&amp;#39; --&amp;gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &amp;#39;/../conf/server.ini&amp;#39;) 注意 路径前加 &amp;lsquo;/&amp;rsquo;,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo" />
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​" />
     <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
   
 
@@ -54,7 +58,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &amp;#39;../conf/server.ini&amp;#39; --&amp;gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &amp;#39;/../conf/server.ini&amp;#39;) 注意 路径前加 &amp;lsquo;/&amp;rsquo;,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo" />
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​" />
   <meta property="og:url" content="http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
@@ -235,7 +241,7 @@ http://stackoverflow.com/questions/918154/relative-paths-in-python http://stacko
     </header>
     <article class="post-content"><p>python项目中，如果pyton代码需要访问某个外部文件，该文件位于代码文件的某个相对路径位置，我们可以在代码中使用相对路径来访问该文件。
 比如图中的代码结构：
-<img src="{{ site.url }}/images/python_relative_file_path/files_structure.PNG" alt="files" /></p>
+<img src="http://www.kotlinor.com/images/python_relative_file_path/files_structure.PNG" alt="files" /></p>
 
 <p>sample.py文件中，如果要访问配置文件server.ini文件，就可以用 &ldquo;../conf/server.ini&rdquo;来进行访问。</p>
 
@@ -243,7 +249,6 @@ http://stackoverflow.com/questions/918154/relative-paths-in-python http://stacko
 如果被引用的python文件和调用文件不在同一个目录，则相对路径就会失效。</p>
 
 <p>比如，我们的例子中， sample.py文件内容如下:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> ConfigParser
 <span style="color:#f92672">import</span> os
 
@@ -256,30 +261,27 @@ http://stackoverflow.com/questions/918154/relative-paths-in-python http://stacko
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
     <span style="color:#66d9ef">print</span> read_conf()</code></pre></div>
-
 <p>main.py内容如下:</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> utils.sample <span style="color:#f92672">import</span> read_conf
 
 <span style="color:#66d9ef">print</span> read_conf()</code></pre></div>
-
 <p>比如上图中，如果main.py调用read_conf时就会发现server.ini文件找不到。问题就处在运行main.py时，当前路径是main.py所在的文件夹，而sample.py中使用的相对
 路径基于该文件夹就会找错位置。解决办法是在sample.py中使用文件绝对路径来访问server.ini文件， 但是我们又要根据脚本存放的当前位置来获得运行时的路径。这个时候
 我们就需要用到python中的 <strong>__file__</strong>变量， 该内置变量存放了本python文件的当前路径信息，根据该变量，我们可以<strong>os.path.dirname(__file__)</strong>得到相应文件
 的绝对路径。</p>
 
 <p>在sample.py中file_path变量做如下修改：</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    file_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;../conf/server.ini&#39;</span>
     <span style="color:#f92672">--&gt;</span>
     file_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(__file__) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/../conf/server.ini&#39;</span>)</code></pre></div>
-
 <p><em>注意</em> 路径前加 &lsquo;/&rsquo;,否则文件路径会不完整。</p>
 
 <p>参考资料：</p>
 
-<p><a href="http://stackoverflow.com/questions/918154/relative-paths-in-python">http://stackoverflow.com/questions/918154/relative-paths-in-python</a>
+<p><a href="http://stackoverflow.com/questions/918154/relative-paths-in-python">http://stackoverflow.com/questions/918154/relative-paths-in-python</a><br />
 <a href="http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo">http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</a></p>
+
+<p>​</p>
 </article>
     <footer class="post-footer">
       

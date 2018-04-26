@@ -212,15 +212,13 @@
         <article class="post-entry">
   <header class="post-header">
     <h3 class="post-title"><a href="http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/" class="post-link">python 时间类型操作</a></h3>
-    <p class="post-meta">@Zack · Aug 26, 2016 · 2 min read</p>
+    <p class="post-meta">@Zack · Aug 26, 2016 · 1 min read</p>
   </header>
   
   <p class="post-summary">经常碰到需要对日期时间的字符串操作，查了又经常忘记，所以写到这里当作自己的笔记。
 datetime模块里有几个经常用到类, datetime, date, time
- date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 &#43; 时间  datetime类 从字符串到datetime  strptime函数 &gt;&gt;&gt; datetime.datetime.strptime(&#39;06-05-2010&#39;, &#34;%d-%m-%Y&#34;).date() datetime.date(2010, 05, 06)
- 第三方库 dateutil from dateutil import parser dt = parser.parse(&#34;Aug 28 1999 12:00AM&#34;)
-  可以通过pip命令安装dateutil安装 pip install python-dateutil
-| 格式化 | 意义 | 例子 | |——–&#43;——————————————————————&#43;—————————–| | %d | Day of the month as a zero-padded decimal number.前面填充0的日期 | 比如00, 01, …, 31 | | %m | Month as a zero-padded decimal number.</p>
+ date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 &#43; 时间  datetime类 从字符串到datetime  strptime函数  datetime.datetime.strptime(&#39;06-05-2010&#39;, &#34;%d-%m-%Y&#34;).date() datetime.date(2010, 05, 06)  第三方库 dateutil  from dateutil import parser dt = parser.parse(&#34;Aug 28 1999 12:00AM&#34;) 可以通过pip命令安装dateutil安装
+pip install python-dateutil    格式化 意义 例子     %d Day of the month as a zero-padded decimal number.前面填充0的日期 比如00, 01, …, 31   %m Month as a zero-padded decimal number.</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/">Read More →</a>
   </footer>

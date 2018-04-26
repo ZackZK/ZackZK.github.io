@@ -16,27 +16,39 @@
 
   
   <meta name="author" content="Zack" />
-  <meta name="description" content="1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
- 为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
-Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy." />
+  <meta name="description" content="1. docker下载image设置代理proxy $ docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
+1. 为docker创建systemd配置文件夹
+$ mkdir /etc/systemd/system/docker.service.d 2. 创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:
+[Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
+Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34; 3. systemd重新加载
+$ sudo systemctl daemon-reload 4. 查看配置是否生效
+$ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy.example.com:80/ 5. 重启docker" />
 
   
   
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@gohugoio" />
     <meta name="twitter:title" content="docker 使用笔记" />
-    <meta name="twitter:description" content="1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
- 为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
-Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy." />
+    <meta name="twitter:description" content="1. docker下载image设置代理proxy $ docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
+1. 为docker创建systemd配置文件夹
+$ mkdir /etc/systemd/system/docker.service.d 2. 创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:
+[Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
+Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34; 3. systemd重新加载
+$ sudo systemctl daemon-reload 4. 查看配置是否生效
+$ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy.example.com:80/ 5. 重启docker" />
     <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
   
 
   
   <meta property="og:type" content="article" />
   <meta property="og:title" content="docker 使用笔记" />
-  <meta property="og:description" content="1. docker下载image设置代理proxy # docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
- 为docker创建systemd配置文件夹  $ mkdir /etc/systemd/system/docker.service.d  创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:  [Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
-Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34;  systemd重新加载  $ sudo systemctl daemon-reload  查看配置是否生效  $ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy." />
+  <meta property="og:description" content="1. docker下载image设置代理proxy $ docker pull busybox Using default tag: latest Pulling repository docker.io/library/busybox Network timed out while trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or if you are behind a proxy. 如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考https://docs.docker.com/engine/admin/systemd/#http-proxy：
+1. 为docker创建systemd配置文件夹
+$ mkdir /etc/systemd/system/docker.service.d 2. 创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:
+[Service] Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=https://proxy.example.com:80/&amp;#34; 对于不想使用代理的域名ip地址，使用NO_PROXY关键字
+Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&amp;#34; 3. systemd重新加载
+$ sudo systemctl daemon-reload 4. 查看配置是否生效
+$ systemctl show --property=Environment docker Environment=HTTP_PROXY=http://proxy.example.com:80/ 5. 重启docker" />
   <meta property="og:url" content="http://www.kotlinor.com/post/2016-10-27-docker-usage-notes/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
@@ -218,60 +230,42 @@ Environment=&amp;#34;HTTP_PROXY=http://proxy.example.com:80/&amp;#34; &amp;#34;N
     <article class="post-content">
 
 <h2 id="1-docker下载image设置代理proxy">1. docker下载image设置代理proxy</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ docker pull busybox
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># docker pull busybox
-</span><span style="color:#75715e"></span>Using default tag: latest
+Using default tag: latest
+
 Pulling repository docker.io/library/busybox
-Network timed out <span style="color:#66d9ef">while</span> trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or <span style="color:#66d9ef">if</span> you are behind a proxy.</code></pre></div>
 
+Network timed out <span style="color:#66d9ef">while</span> trying to connect to https://index.docker.io/v1/repositories/library/busybox/images. You may want to check your internet connection or <span style="color:#66d9ef">if</span> you are behind a proxy.</code></pre></div>
 <p>如果系统是用systemd启动docker的daemon的话，docker不会使用系统默认的代理，需要做如下操作，参考<a href="https://docs.docker.com/engine/admin/systemd/#http-proxy：">https://docs.docker.com/engine/admin/systemd/#http-proxy：</a></p>
 
-<ol>
-<li>为docker创建systemd配置文件夹</li>
-</ol>
+<p>1. 为docker创建systemd配置文件夹</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mkdir /etc/systemd/system/docker.service.d</code></pre></div>
+<p>2. 创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir /etc/systemd/system/docker.service.d</code></pre></div>
-
-<ol>
-<li>创建 /etc/systemd/system/docker.service.d/http-proxy.conf 包含下面内容:</li>
-</ol>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
 Environment<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HTTP_PROXY=http://proxy.example.com:80/&#34;</span>
+
 Environment<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HTTPS_PROXY=https://proxy.example.com:80/&#34;</span></code></pre></div>
-
 <p>对于不想使用代理的域名ip地址，使用NO_PROXY关键字</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Environment<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HTTP_PROXY=http://proxy.example.com:80/&#34;</span> <span style="color:#e6db74">&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34;</span></code></pre></div>
-
-<ol>
-<li>systemd重新加载</li>
-</ol>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl daemon-reload</code></pre></div>
-
-<ol>
-<li>查看配置是否生效</li>
-</ol>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ systemctl show --property<span style="color:#f92672">=</span>Environment docker
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Environment<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;HTTP_PROXY=http://proxy.example.com:80/&#34;</span> <span style="color:#e6db74">&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&#34;</span></code></pre></div>
+<p>3. systemd重新加载</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl daemon-reload</code></pre></div>
+<p>4. 查看配置是否生效</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl show --property<span style="color:#f92672">=</span>Environment docker
 Environment<span style="color:#f92672">=</span>HTTP_PROXY<span style="color:#f92672">=</span>http://proxy.example.com:80/</code></pre></div>
-
-<ol>
-<li>重启docker</li>
-</ol>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl restart docker</code></pre></div>
-
+<p>5. 重启docker</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl restart docker</code></pre></div>
 <h2 id="2-docker为container设置代理proxy">2. docker为container设置代理proxy</h2>
 
 <p>docker的container不会使用docker daemon的代理，需要额外配置，两种方法，一种是container的命令行加入： &ndash;env http_proxy=&hellip;来设置，另外是在Dockerfile中指定环境变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">FROM ubuntu:14.04
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">FROM ubuntu:14.04
 ENV http_proxy &lt;HTTP_PROXY&gt;
+
 ENV https_proxy &lt;HTTPS_PROXY&gt;
-RUN apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get upgrade</code></pre></div>
-</article>
+
+RUN apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get upgrade</code></pre></div></article>
     <footer class="post-footer">
       
       <ul class="post-tags">

@@ -223,7 +223,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &#39;../conf/server.ini&#39; --&gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &#39;/../conf/server.ini&#39;) 注意 路径前加 ‘/’,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</p>
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/">Read More →</a>
   </footer>

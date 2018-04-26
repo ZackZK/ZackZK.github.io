@@ -218,10 +218,12 @@
     <p class="post-meta">@Zack · Sep 9, 2015 · 1 min read</p>
   </header>
   
-  <p class="post-summary">spark配置 spark的配置文件放在conf目录下，默认会有类似xx.template的模板文件，去掉后缀.template就可以作为spark相应的配置文件。
+  <p class="post-summary"> spark配置 spark的配置文件放在conf目录下，默认会有类似xx.template的模板文件，去掉后缀.template就可以作为spark相应的配置文件。
 spark 在阿里云上的配置 在一般的云服务器上一般会有两个ip地址，比如阿里云主机上，eth0默认是内部网络ip（用于阿里云主机之间通信），eth1才是外网可访问的ip地址。 spark会默认会使用8080端口作为UI端口号，并且绑定在0.0.0.0上，也就意味着外部网络可以通过 http://eth1_ip:8080访问spark UI界面， 如果要改变端口号，在conf/spark-env.sh文件中加入下面内容即可
 export SPARK_MASTER_WEBUI_PORT=8090 如果当前指定的端口号被别的应用程序占用，spark自动会继续加1往下找到一个可用的端口号。
-Spark的log级别设置 默认情况下，spark会在屏幕打印INFO级别以上的log，这些信息对于调试来说很重要，但是当spark程序正常运行时，可能不需要这么多信息，这个时候，可以通过修改 conf/log4j.properties： 在文件中找到该行： log4j.rootCategory=INFO, console 将其修改成 log4j.rootCategory=WARN, console</p>
+Spark的log级别设置 默认情况下，spark会在屏幕打印INFO级别以上的log，这些信息对于调试来说很重要，但是当spark程序正常运行时，可能不需要这么多信息，这个时候，可以通过修改 conf/log4j.properties： 在文件中找到该行：
+log4j.rootCategory=INFO, console 将其修改成
+log4j.rootCategory=WARN, console</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2015-09-09-spark-usage/">Read More →</a>
   </footer>
@@ -242,7 +244,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &#39;../conf/server.ini&#39; --&gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &#39;/../conf/server.ini&#39;) 注意 路径前加 ‘/’,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</p>
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/">Read More →</a>
   </footer>

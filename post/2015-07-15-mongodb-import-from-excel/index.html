@@ -215,12 +215,11 @@ $ mongoimport connected to: 127.0.0.1 no collection specified! Import CSV, TSV o
     <article class="post-content">
 
 <p>mongoimport工具可以从指定的CSV， TSV 或者 JSON数据中导入到mongoDB。 而excel表格可以直接另存为csv格式。</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mongoimport
 connected to: <span style="color:#ae81ff">127</span>.0.0.1
 no collection specified!
 Import CSV, TSV or JSON data into MongoDB.
- 
+
 options:
   -h <span style="color:#f92672">[</span> --host <span style="color:#f92672">]</span> arg       mongo host to connect to <span style="color:#f92672">(</span> &lt;set name&gt;/s1,s2 <span style="color:#66d9ef">for</span> sets<span style="color:#f92672">)</span>
   -u <span style="color:#f92672">[</span> --username <span style="color:#f92672">]</span> arg   username
@@ -231,30 +230,25 @@ options:
   --file arg              file to import from; <span style="color:#66d9ef">if</span> not specified stdin is used
   --drop                  drop collection first 
   --upsert                insert or update objects that already exist</code></pre></div>
-
 <p>所以，我们可以先将execl文件转换成csv文件，再利用mongoimport将其导入到mongodb中。步骤如下：</p>
 
 <p>1. 将excel文件转换成csv文件格式
-    首先要保证excel第一行为<strong>表头并为英文</strong>，这是因为第一行会作为mongodb字段名和后面各行进行对于。再另存为csv文件：
-    <img src="{{ site.url }}/images/mongodb_import_from_csv/excel_export_step1.png" alt="step1" />
-    选择MS-DOS CSV格式:
-    <img src="{{ site.url }}/images/mongodb_import_from_csv/excel_export_step2.png" alt="step2" />
-    告警忽略:
-    <img src="{{ site.url }}/images/mongodb_import_from_csv/excel_export_step3.png" alt="step3" /></p>
+    首先要保证excel第一行为<strong>表头并为英文</strong>，这是因为第一行会作为mongodb字段名和后面各行进行对于。再另存为csv文件：<br />
+    <img src="http://www.kotlinor.com/images/mongodb_import_from_csv/excel_export_step1.png" alt="step1" />
+    选择MS-DOS CSV格式:<br />
+    <img src="http://www.kotlinor.com/images/mongodb_import_from_csv/excel_export_step2.png" alt="step2" />
+    告警忽略:<br />
+    <img src="http://www.kotlinor.com/images/mongodb_import_from_csv/excel_export_step3.png" alt="step3" /></p>
 
 <p>2. 将csv文件转成UTF-8编码
     可以使用各种工具，这里使用的Notepad++。 使用notepad++将上一步骤中产生的csv文件打开，选择菜单栏中转换为UTF-8选项并保存。 记得先关掉上一步中的excel。
-    <img src="{{ site.url }}/images/mongodb_import_from_csv/excel_export_step4.png" alt="step4" /></p>
+    <img src="http://www.kotlinor.com/images/mongodb_import_from_csv/excel_export_step4.png" alt="step4" /></p>
 
-<p>3. 将转换好的csv文件上传到linux机器上，执行下面命令：
-    <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    mongoimport -d &lt;your DB name &gt; -c &lt;collection name&gt; --type csv --headerline --file xxx.csv
-    </code></pre></div></p>
-
+<p>3. 将转换好的csv文件上传到linux机器上，执行下面命令：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mongoimport -d &lt;your DB name &gt; -c &lt;collection name&gt; --type csv --headerline --file xxx.csv</code></pre></div>
 <p>将上面命令中换成需要导入的db 和 对应的collection。 如果导入成功会有如下输出：</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">connected to: <span style="color:#ae81ff">127</span>.0.0.1
 Wed Apr <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">13</span>:26:12 imported <span style="color:#ae81ff">60</span> objects</code></pre></div>
-
 <h3 id="update-on-2015-07-21">update on 2015/07/21</h3>
 
 <p><strong>mongoimport 导入数据时的数据类型问题</strong>
@@ -262,7 +256,6 @@ Wed Apr <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">13</sp
 <a href="http://stackoverflow.com/questions/24223443/mongoimport-choosing-field-type">stack overflow的讨论</a></p>
 
 <p>一种方法，可以通过下面的python代码将csv文件读入，然后转换成自己想要的格式，将其写入mongodb。注意：需要<a href="http://api.mongodb.org/python/current/">PyMongo</a>支持。</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
 <span style="color:#f92672">import</span> csv
 
@@ -283,8 +276,7 @@ db <span style="color:#f92672">=</span> mongoClient<span style="color:#f92672">.
     <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> reader:
         one <span style="color:#f92672">=</span> MyType(type<span style="color:#f92672">=</span>int(row[<span style="color:#e6db74">&#39;type&#39;</span>]),
                      value<span style="color:#f92672">=</span>float(row[<span style="color:#e6db74">&#39;value&#39;</span>]))
-        write_mongoDB(one)</code></pre></div>
-</article>
+        write_mongoDB(one)</code></pre></div></article>
     <footer class="post-footer">
       
       <ul class="post-tags">

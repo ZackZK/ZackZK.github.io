@@ -21,8 +21,8 @@
 解决方法 ： 使用ansible的environment关键字来设置proxy
 见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
 官方的例子
-- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
-- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080 也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb - name: download key apt_key: keyserver=hkp://keyserver." />
 
   
   
@@ -34,8 +34,8 @@
 解决方法 ： 使用ansible的environment关键字来设置proxy
 见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
 官方的例子
-- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
-- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080 也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb - name: download key apt_key: keyserver=hkp://keyserver." />
     <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
   
 
@@ -47,8 +47,8 @@
 解决方法 ： 使用ansible的environment关键字来设置proxy
 见官方文档： http://docs.ansible.com/ansible/playbooks_environment.html
 官方的例子
-- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080  也可以使用变量：
-- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb --- - name: download key apt_key: keyserver=hkp://keyserver." />
+- hosts: all remote_user: root tasks: - apt: name=apache2 state=installed environment: http_proxy: http://proxy.example.com:8080 也可以使用变量：
+- hosts: all remote_user: root # here we make a variable named &amp;#34;proxy_env&amp;#34; that is a dictionary  vars: proxy_env: http_proxy: http://proxy.example.com:8080 tasks: - apt: name=apache2 state=installed environment: &amp;#34;{{proxy_env}}&amp;#34; 2. 安装mongodb - name: download key apt_key: keyserver=hkp://keyserver." />
   <meta property="og:url" content="http://www.kotlinor.com/post/2016-10-24-ansible-notes/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
@@ -240,20 +240,15 @@
 <p>见官方文档： <a href="http://docs.ansible.com/ansible/playbooks_environment.html">http://docs.ansible.com/ansible/playbooks_environment.html</a></p>
 
 <p>官方的例子</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: all
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">- hosts: all
   remote_user: root
 
   tasks:
-
     - apt: name<span style="color:#f92672">=</span>apache2 state<span style="color:#f92672">=</span>installed
       environment:
-      http_proxy: http://proxy.example.com:8080
-      </code></pre></div>
-
+      http_proxy: http://proxy.example.com:8080</code></pre></div>
 <p>也可以使用变量：</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: all
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">- hosts: all
   remote_user: root
 
   <span style="color:#75715e"># here we make a variable named &#34;proxy_env&#34; that is a dictionary
@@ -262,33 +257,31 @@
       http_proxy: http://proxy.example.com:8080
 
   tasks:
-
     - apt: name<span style="color:#f92672">=</span>apache2 state<span style="color:#f92672">=</span>installed
       environment: <span style="color:#e6db74">&#34;{{proxy_env}}&#34;</span></code></pre></div>
-
 <h2 id="2-安装mongodb">2. 安装mongodb</h2>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
-- name: download key
-  apt_key: keyserver=hkp://keyserver.ubuntu.com:<span style="color:#ae81ff">80</span> id=EA312927 state=present
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">- name: download key
+  apt_key: keyserver<span style="color:#f92672">=</span>hkp://keyserver.ubuntu.com:80 id<span style="color:#f92672">=</span>EA312927 state<span style="color:#f92672">=</span>present
 
 - name : <span style="color:#ae81ff">2</span>. update Repo
-  apt_repository: repo=<span style="color:#e6db74">&#39;deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse&#39;</span> state=present
+  apt_repository: repo<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse&#39;</span> state<span style="color:#f92672">=</span>present
 
 - name: <span style="color:#ae81ff">3</span>. install mongodb
-  apt: name=mongodb-org state=present 
+  apt: name<span style="color:#f92672">=</span>mongodb-org state<span style="color:#f92672">=</span>present 
 
 - name: <span style="color:#ae81ff">4</span>. start mongodb
-  service: name=mongod state=started enabled=yes
+  service: name<span style="color:#f92672">=</span>mongod state<span style="color:#f92672">=</span>started enabled<span style="color:#f92672">=</span>yes
 
 - name: <span style="color:#ae81ff">5</span>. create mongodb user
-  mongodb_user: database=algo name=algo password=algo state=present</code></pre></div>
+  mongodb_user: database<span style="color:#f92672">=</span>algo name<span style="color:#f92672">=</span>algo password<span style="color:#f92672">=</span>algo state<span style="color:#f92672">=</span>present</code></pre></div>
+<p>运行ansible-playbook到第三步时碰到这样的错误</p>
 
-<p>运行ansible-playbook到第三步时碰到这样的错误“E: There were unauthenticated packages and -y was used without &ndash;allow-unauthenticated”
-查看apt模块说明，需要加 allow_unauthenticated=yes 参数</p>
+<blockquote>
+<p>“E: There were unauthenticated packages and -y was used without &ndash;allow-unauthenticated”</p>
+</blockquote>
 
+<p>查看apt模块说明，需要加 allow_unauthenticated=yes 参数</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apt: name=mongodb-org state=present allow_unauthenticated=yes</code></pre></div>
-
 <h2 id="3-编译安装mesos">3. 编译安装mesos</h2>
 
 <p>根据<a href="http://mesos.apache.org/gettingstarted/">http://mesos.apache.org/gettingstarted/</a> 的步骤：</p>
@@ -296,7 +289,6 @@
 <ol>
 <li>下载解压mesos源代码</li>
 </ol>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: download mesos source code
   get_url:
     url: http://archive.apache.org/dist/mesos/<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1</span>/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1.</span>tar.gz
@@ -305,7 +297,6 @@
 
 - name: untar mesos source
   unarchive: src=/var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1.</span>tar.gz dest=/var/log/ remote_src=yes copy=no</code></pre></div>
-
 <p>对于当前使用的ansible 2.1.2.0，
 get_url模块经过测试验证如果目标地址是目录的话，force选项即使为no也不会产生任何作用，即如果 “dest: /var/log/” 将mesos代码放在/var/log/目录下，但是未指定目标文件名，虽然force=no，get_url也会重新下载</p>
 
@@ -314,7 +305,6 @@ get_url模块经过测试验证如果目标地址是目录的话，force选项�
 <ol>
 <li>在ubuntu上要安装一系列依赖：</li>
 </ol>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: install System Requirements
   apt: name={{item}} state=present
   with_items:
@@ -333,19 +323,15 @@ get_url模块经过测试验证如果目标地址是目录的话，force选项�
     - libapr1-dev
     - libsvn-dev
     - zlib1g-dev                <span style="color:#75715e"># 官方文档中没有</span></code></pre></div>
-
 <ol>
 <li>编译安装mesos</li>
 </ol>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: configure mesos
   command: <span style="color:#e6db74">&#39;./configure chdir=/var/log/mesos-1.0.1&#39;</span>
 
 - name: make mesos
-  make: chdir=/var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1</span>
-  </code></pre></div>
-
-<p>编译过程中碰到maven编译出错，报下载不了pom文件，这个是因为maven不使用系统默认的环境变量。参考<a href="https://maven.apache.org/guides/mini/guide-proxies.html">https://maven.apache.org/guides/mini/guide-proxies.html</a>, 有两种方式为maven添加代理。这里因为不是直接命令行maven编译，所以采用maven配置文件的方式。创建settings.xml文件，内如如下：
+  make: chdir=/var/log/mesos-<span style="color:#ae81ff">1.0</span>.<span style="color:#ae81ff">1</span></code></pre></div>
+<p>编译过程中碰到maven编译出错，报下载不了pom文件，这个是因为maven不使用系统默认的环境变量。参考<a href="https://maven.apache.org/guides/mini/guide-proxies.html">https://maven.apache.org/guides/mini/guide-proxies.html</a>, 有两种方式为maven添加代理。这里因为不是直接命令行maven编译，所以采用maven配置文件的方式。创建settings.xml文件，内如如下：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;settings&gt;</span>
   .
   .
@@ -363,13 +349,10 @@ get_url模块经过测试验证如果目标地址是目录的话，force选项�
   <span style="color:#f92672">&lt;/proxies&gt;</span>
   .
   .
-<span style="color:#f92672">&lt;/settings&gt;</span></code></pre></div></p>
-
+<span style="color:#f92672">&lt;/settings&gt;</span></code></pre></div>
 <p>将示例中相关参数根据实际情况修改。在编译mesos之前，将该配置文件拷贝到远程主机的 ~/.m2/setting.xml</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- name: add proxy for maven
-  template: src=settings.xml dest=settings.xml</code></pre></div>
-</article>
+  template: src=settings.xml dest=settings.xml</code></pre></div></article>
     <footer class="post-footer">
       
       <ul class="post-tags">

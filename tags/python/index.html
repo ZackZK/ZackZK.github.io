@@ -225,15 +225,13 @@
         <article class="post-entry">
   <header class="post-header">
     <h3 class="post-title"><a href="http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/" class="post-link">python 时间类型操作</a></h3>
-    <p class="post-meta">@Zack · Aug 26, 2016 · 2 min read</p>
+    <p class="post-meta">@Zack · Aug 26, 2016 · 1 min read</p>
   </header>
   
   <p class="post-summary">经常碰到需要对日期时间的字符串操作，查了又经常忘记，所以写到这里当作自己的笔记。
 datetime模块里有几个经常用到类, datetime, date, time
- date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 &#43; 时间  datetime类 从字符串到datetime  strptime函数 &gt;&gt;&gt; datetime.datetime.strptime(&#39;06-05-2010&#39;, &#34;%d-%m-%Y&#34;).date() datetime.date(2010, 05, 06)
- 第三方库 dateutil from dateutil import parser dt = parser.parse(&#34;Aug 28 1999 12:00AM&#34;)
-  可以通过pip命令安装dateutil安装 pip install python-dateutil
-| 格式化 | 意义 | 例子 | |——–&#43;——————————————————————&#43;—————————–| | %d | Day of the month as a zero-padded decimal number.前面填充0的日期 | 比如00, 01, …, 31 | | %m | Month as a zero-padded decimal number.</p>
+ date 日期类 (年，月，日) time 时间类 (小时， 分钟， 秒， 微秒) datetime 日期 &#43; 时间  datetime类 从字符串到datetime  strptime函数  datetime.datetime.strptime(&#39;06-05-2010&#39;, &#34;%d-%m-%Y&#34;).date() datetime.date(2010, 05, 06)  第三方库 dateutil  from dateutil import parser dt = parser.parse(&#34;Aug 28 1999 12:00AM&#34;) 可以通过pip命令安装dateutil安装
+pip install python-dateutil    格式化 意义 例子     %d Day of the month as a zero-padded decimal number.前面填充0的日期 比如00, 01, …, 31   %m Month as a zero-padded decimal number.</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2016-08-26-python-datetime-string-operation/">Read More →</a>
   </footer>
@@ -278,7 +276,7 @@ data = {&#34;is_funda_search&#34;:&#34;0&#34;, &#34;fundavolume&#34;:&#34;100&#3
   </header>
   
   <p class="post-summary">gevent的安装过程：
-1. 安装greenlet依赖 sudo pip install greenlet   2. 安装gevent sudo pip install gevent  安装过程中，碰到下面错误：
+1. 安装greenlet依赖 sudo pip install greenlet 2. 安装gevent sudo pip install gevent 安装过程中，碰到下面错误：
 gevent/gevent.core.c:9:22: fatal error: pyconfig.h: No such file or directory #include &#34;pyconfig.h&#34;  ^ compilation terminated. error: command &#39;x86_64-linux-gnu-gcc&#39; failed with exit status 1 ---------------------------------------- Cleaning up... Command /usr/bin/python -c &#34;import setuptools, tokenize;__file__=&#39;/tmp/pip_build_root/gevent/setup.py&#39;;exec(compile(getattr(tokenize, &#39;open&#39;, open)(__file__).read().replace(&#39;\r\n&#39;, &#39;\n&#39;), __file__, &#39;exec&#39;))&#34; install --record /tmp/pip-11RdgV-record/install-record.txt --single-version-externally-managed --compile failed with error code 1 in /tmp/pip_build_root/gevent Storing debug log for failure in /root/.</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2015-09-09-gevent-install-failure/">Read More →</a>
@@ -300,7 +298,9 @@ from utils.sample import read_conf print read_conf() 比如上图中，如果mai
 在sample.py中file_path变量做如下修改：
 file_path = &#39;../conf/server.ini&#39; --&gt; file_path = os.path.join(os.path.dirname(__file__) &#43; &#39;/../conf/server.ini&#39;) 注意 路径前加 ‘/’,否则文件路径会不完整。
 参考资料：
-http://stackoverflow.com/questions/918154/relative-paths-in-python http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo</p>
+http://stackoverflow.com/questions/918154/relative-paths-in-python
+http://stackoverflow.com/questions/1270951/python-how-to-refer-to-relative-paths-of-resources-when-working-with-code-repo
+​</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2015-07-23-python-relative-file-path-operation/">Read More →</a>
   </footer>

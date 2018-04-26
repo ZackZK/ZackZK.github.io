@@ -225,7 +225,6 @@ import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbas
 <p>对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：</p>
 
 <p>首先，加入下面依赖：</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#f92672">&lt;dependencies&gt;</span>
         <span style="color:#f92672">&lt;dependency&gt;</span>
             <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.spark<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -239,7 +238,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbas
             <span style="color:#f92672">&lt;artifactId&gt;</span>hbase-common<span style="color:#f92672">&lt;/artifactId&gt;</span>
             <span style="color:#f92672">&lt;version&gt;</span>1.1.2<span style="color:#f92672">&lt;/version&gt;</span>
         <span style="color:#f92672">&lt;/dependency&gt;</span>
-
+    
         <span style="color:#f92672">&lt;dependency&gt;</span>
             <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.hbase<span style="color:#f92672">&lt;/groupId&gt;</span>
             <span style="color:#f92672">&lt;artifactId&gt;</span>hbase-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
@@ -251,10 +250,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbas
             <span style="color:#f92672">&lt;version&gt;</span>1.1.2<span style="color:#f92672">&lt;/version&gt;</span>
         <span style="color:#f92672">&lt;/dependency&gt;</span>
     <span style="color:#f92672">&lt;/dependencies&gt;</span></code></pre></div>
-
 <p>下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。</p>
-
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.apache.hadoop.hbase.HBaseConfiguration<span style="color:#f92672">;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> org.apache.hadoop.hbase.HBaseConfiguration<span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> org.apache.hadoop.hbase.util.Base64<span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> org.apache.hadoop.hbase.util.Bytes<span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> org.apache.spark.api.java.JavaSparkContext<span style="color:#f92672">;</span>
@@ -299,12 +296,12 @@ import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbas
         JavaSparkContext jsc <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JavaSparkContext<span style="color:#f92672">(</span>sparkConf<span style="color:#f92672">);</span>
 
         Configuration conf <span style="color:#f92672">=</span> HBaseConfiguration<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">();</span>
-
+        
         Scan scan <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scan<span style="color:#f92672">();</span>
         scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addFamily</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">));</span>
         scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;art&#34;</span><span style="color:#f92672">));</span>
         scan<span style="color:#f92672">.</span><span style="color:#a6e22e">addColumn</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;math&#34;</span><span style="color:#f92672">));</span>
-
+        
         String scanToString <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">;</span>
         <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
             ClientProtos<span style="color:#f92672">.</span><span style="color:#a6e22e">Scan</span> proto <span style="color:#f92672">=</span> ProtobufUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toScan</span><span style="color:#f92672">(</span>scan<span style="color:#f92672">);</span>
@@ -312,86 +309,82 @@ import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbas
         <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException io<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
             System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>io<span style="color:#f92672">);</span>
         <span style="color:#f92672">}</span>
-
+        
         <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 2<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
             <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
                 String tableName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;scores&#34;</span><span style="color:#f92672">;</span>
                 conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">INPUT_TABLE</span><span style="color:#f92672">,</span> tableName<span style="color:#f92672">);</span>
                 conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">SCAN</span><span style="color:#f92672">,</span> scanToString<span style="color:#f92672">);</span>
-
+        
                 <span style="color:#75715e">//获得hbase查询结果Result
 </span><span style="color:#75715e"></span>                JavaPairRDD<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;</span> hBaseRDD <span style="color:#f92672">=</span> jsc<span style="color:#f92672">.</span><span style="color:#a6e22e">newAPIHadoopRDD</span><span style="color:#f92672">(</span>conf<span style="color:#f92672">,</span>
                         TableInputFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> ImmutableBytesWritable<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span>
                         Result<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
-
+        
                 <span style="color:#75715e">/* 生成类似 [(Jim, 80, 89), (Tom, 88, 97)] 的RDD */</span>
                 JavaPairRDD<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;</span> art_scores <span style="color:#f92672">=</span> hBaseRDD<span style="color:#f92672">.</span><span style="color:#a6e22e">mapToPair</span><span style="color:#f92672">(</span>
                         <span style="color:#66d9ef">new</span> PairFunction<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;,</span> String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;()</span> <span style="color:#f92672">{</span>
                             <span style="color:#a6e22e">@Override</span>
                             <span style="color:#66d9ef">public</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">call</span><span style="color:#f92672">(</span>Tuple2<span style="color:#f92672">&lt;</span>ImmutableBytesWritable<span style="color:#f92672">,</span> Result<span style="color:#f92672">&gt;</span> results<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-
+        
                                 List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;();</span>
-
+        
                                 <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> art_score <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;art&#34;</span><span style="color:#f92672">));</span>
                                 <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> math_score <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;course&#34;</span><span style="color:#f92672">),</span> Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toBytes</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;math&#34;</span><span style="color:#f92672">));</span>
-
+        
                                 <span style="color:#75715e">/* 注意： Hbase里存的数据以Byte Array形式存储， 需要使用Integer.parseInt(Bytes.toString(art_score))将数据内容转化为整型
 </span><span style="color:#75715e">                                * Integer.parseInt(price.toString()) 会得到错误答案 */</span>
                                 list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>art_score<span style="color:#f92672">)));</span>
                                 list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">parseInt</span><span style="color:#f92672">(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>math_score<span style="color:#f92672">)));</span>
-
+        
                                 <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;(</span>Bytes<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>results<span style="color:#f92672">.</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">()),</span> list<span style="color:#f92672">);</span>
                             <span style="color:#f92672">}</span>
                         <span style="color:#f92672">}</span>
                 <span style="color:#f92672">);</span>
-
+        
                 <span style="color:#75715e">/* 如果是使用Java8， 可以简化成下面的形式: 
 </span><span style="color:#75715e">                JavaPairRDD&lt;Integer, Double&gt; stock_price_pair = hBaseRDD.mapToPair(
 </span><span style="color:#75715e">                    (results) -&gt; {
 </span><span style="color:#75715e">                          List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
-</span><span style="color:#75715e">
+</span><span style="color:#75715e">        
 </span><span style="color:#75715e">                          byte[] art_score = results._2().getValue(Bytes.toBytes(&#34;course&#34;), Bytes.toBytes(&#34;art&#34;));
 </span><span style="color:#75715e">                          byte[] math_score = results._2().getValue(Bytes.toBytes(&#34;course&#34;), Bytes.toBytes(&#34;math&#34;));
-</span><span style="color:#75715e">
+</span><span style="color:#75715e">        
 </span><span style="color:#75715e">                          list.add(Integer.parseInt(Bytes.toString(art_score)));
 </span><span style="color:#75715e">                          list.add(Integer.parseInt(Bytes.toString(math_score)));
-</span><span style="color:#75715e">
+</span><span style="color:#75715e">        
 </span><span style="color:#75715e">                          return new Tuple2&lt;String, List&lt;Integer&gt;&gt;(Bytes.toString(results._1().get()), list);
 </span><span style="color:#75715e">                    }
 </span><span style="color:#75715e">                )
 </span><span style="color:#75715e">                */</span>
-
+        
                 <span style="color:#75715e">/* 笛卡尔乘积，生成 [((Jim, 80, 89), (Tom, 88, 97)), ((Tom, 88, 97), (Jim, 80, 89)), ((Jim, 80, 89), (Jim, 80, 89)),
 </span><span style="color:#75715e">                ((Tom, 88, 97), (Tom, 88, 97))] 的RDD */</span><span style="color:#f92672">]</span> <span style="color:#f92672">*/</span>
                 JavaPairRDD<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> cart <span style="color:#f92672">=</span> art_scores<span style="color:#f92672">.</span><span style="color:#a6e22e">cartesian</span><span style="color:#f92672">(</span>art_scores<span style="color:#f92672">);</span>
-
+        
                 <span style="color:#75715e">/* 利用row key的大小关系去除重复的组合关系， 生成 [((Jim, 80, 89), (Tom, 88, 97))] */</span>
                 JavaPairRDD<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> cart2 <span style="color:#f92672">=</span> cart<span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>
                         <span style="color:#66d9ef">new</span> Function<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;,</span> Boolean<span style="color:#f92672">&gt;()</span> <span style="color:#f92672">{</span>
                             <span style="color:#66d9ef">public</span> Boolean <span style="color:#a6e22e">call</span><span style="color:#f92672">(</span>Tuple2<span style="color:#f92672">&lt;</span>Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;,</span> Tuple2<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;&gt;</span> tuple2Tuple2Tuple2<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
-
+        
                                 <span style="color:#66d9ef">return</span> tuple2Tuple2Tuple2<span style="color:#f92672">.</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">().</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>tuple2Tuple2Tuple2<span style="color:#f92672">.</span><span style="color:#a6e22e">_2</span><span style="color:#f92672">().</span><span style="color:#a6e22e">_1</span><span style="color:#f92672">())</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">;</span>
                             <span style="color:#f92672">}</span>
                         <span style="color:#f92672">}</span>
                 <span style="color:#f92672">);</span>
-
+        
                 <span style="color:#75715e">/* 得到最终结果 [((Jim, 80, 89), (Tom, 88, 97))] */</span>
                 cart_all <span style="color:#f92672">=</span> cart2<span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">();</span>
-
+        
             <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
                 System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
             <span style="color:#f92672">}</span>
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span></code></pre></div></p>
-
+<span style="color:#f92672">}</span></code></pre></div>
 <p>编译运行时，Hbase的一些库可能会找不到，一种办法是在命令行中加入Hbase相应的jar包，比如：</p>
-
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">spark-submit --master spark://127.0.0.0:7078 --class spark_hbase_main --jars <span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-common-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-client-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/guava-12.0.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-protocol-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-server-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/htrace-core-3.1.0-incubating.jar spark-hbase-1.0.jar</code></pre></div></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">spark-submit --master spark://127.0.0.0:7078 --class spark_hbase_main --jars <span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-common-1.0.1.1.jar,​<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-client-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/guava-12.0.1.jar,​<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-protocol-1.0.1.1.jar,<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/hbase-server-1.0.1.1.jar,​<span style="color:#e6db74">${</span>HBASE_HOME<span style="color:#e6db74">}</span>/lib/htrace-core-3.1.0-incubating.jar spark-hbase-1.0.jar</code></pre></div>
 <p>如果缺少相应的Hbase的jar包，比如缺少hbase-common-1.0.1.1.jar会出现下面的错误：</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
         at java.lang.Class.forName0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
         at java.lang.Class.forName<span style="color:#f92672">(</span>Class.java:278<span style="color:#f92672">)</span>
         at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:634<span style="color:#f92672">)</span>
@@ -407,10 +400,8 @@ Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.protobuf.ge
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
         ... <span style="color:#ae81ff">7</span> more</code></pre></div>
-
 <p>缺少hbase-protocol-1.0.1.1.jar会报如下错误：</p>
-
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/protobuf/generated/ClientProtos$Scan
         at java.lang.Class.forName0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
         at java.lang.Class.forName<span style="color:#f92672">(</span>Class.java:278<span style="color:#f92672">)</span>
         at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain<span style="color:#f92672">(</span>SparkSubmit.scala:634<span style="color:#f92672">)</span>
@@ -426,10 +417,9 @@ Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.protobuf.ge
         at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
-        ... <span style="color:#ae81ff">7</span> more</code></pre></div></p>
-
-<p>缺少hbase-server-1.0.1.1.jar会报如下错误：
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/mapreduce/TableInputFormat
+        ... <span style="color:#ae81ff">7</span> more</code></pre></div>
+<p>缺少hbase-server-1.0.1.1.jar会报如下错误：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Exception in thread <span style="color:#e6db74">&#34;main&#34;</span> java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/mapreduce/TableInputFormat
         at spark_hbase_main.main<span style="color:#f92672">(</span>spark_hbase_main.java:129<span style="color:#f92672">)</span>
         at sun.reflect.NativeMethodAccessorImpl.invoke0<span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
         at sun.reflect.NativeMethodAccessorImpl.invoke<span style="color:#f92672">(</span>NativeMethodAccessorImpl.java:57<span style="color:#f92672">)</span>
@@ -447,10 +437,9 @@ Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.mapreduce.T
         at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
-        ... <span style="color:#ae81ff">10</span> more</code></pre></div></p>
-
-<p>缺少htrace-core-3.1.0-incubating.jar会报如下错误：
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">15</span>/09/12 <span style="color:#ae81ff">16</span>:56:59 ERROR TableInputFormat: java.io.IOException: java.lang.reflect.InvocationTargetException
+        ... <span style="color:#ae81ff">10</span> more</code></pre></div>
+<p>缺少htrace-core-3.1.0-incubating.jar会报如下错误：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#ae81ff">15</span>/09/12 <span style="color:#ae81ff">16</span>:56:59 ERROR TableInputFormat: java.io.IOException: java.lang.reflect.InvocationTargetException
         at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:240<span style="color:#f92672">)</span>
         at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:218<span style="color:#f92672">)</span>
         at org.apache.hadoop.hbase.client.ConnectionFactory.createConnection<span style="color:#f92672">(</span>ConnectionFactory.java:119<span style="color:#f92672">)</span>
@@ -507,21 +496,16 @@ Caused by: java.lang.ClassNotFoundException: org.apache.htrace.Trace
         at java.net.URLClassLoader.findClass<span style="color:#f92672">(</span>URLClassLoader.java:354<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:425<span style="color:#f92672">)</span>
         at java.lang.ClassLoader.loadClass<span style="color:#f92672">(</span>ClassLoader.java:358<span style="color:#f92672">)</span>
-        ... <span style="color:#ae81ff">44</span> more</code></pre></div></p>
-
+        ... <span style="color:#ae81ff">44</span> more</code></pre></div>
 <h2 id="spark集群环境下面读取hbase">spark集群环境下面读取hbase</h2>
 
 <p>如果要在集群上运行，会发现worker node访问不了hbase内容。原因我们之前的例子里没有指定hbase的地址信息。
 加入下面代码：</p>
-
-<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.quorum&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;18.18.18.18&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">//指定ip地址
-</span><span style="color:#75715e"></span>  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.property.clientPort&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;2182&#34;</span><span style="color:#f92672">);</span> <span style="color:#f92672">//</span> zookeeper的端口号</code></pre></div></p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.quorum&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;18.18.18.18&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">//指定ip地址
+</span><span style="color:#75715e"></span>  conf<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hbase.zookeeper.property.clientPort&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;2182&#34;</span><span style="color:#f92672">);</span> <span style="color:#f92672">//</span> zookeeper的端口号</code></pre></div>
 <p>注意，在调试过程中，还是发现如果spark的其他worker运行在其他node上，hbase还是无法正常访问。打开spark的debug级别的log，
 在spark目录conf/log4j.properties，修改：</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">log4j<span style="color:#f92672">.</span><span style="color:#a6e22e">rootCategory</span><span style="color:#f92672">=</span>DEBUG<span style="color:#f92672">,</span> console</code></pre></div>
-
 <p>发现其他主机通过主机名来访问hbase服务器，但是由于DNS或者/etc/hosts中并没有该主机信息，导致连接不上。修改worker主机上/etc/hosts文件
 加入“18.18.18.18 hbase主机名”解决问题。</p>
 </article>
