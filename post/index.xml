@@ -7,10 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
-    <lastBuildDate>Sat, 26 Nov 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://www.kotlinor.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>golang的坑</title>
+      <link>http://www.kotlinor.com/post/2018-04-27-golang-usage/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.kotlinor.com/post/2018-04-27-golang-usage/</guid>
+      <description>1. json.Marshal函数  返回空&amp;rdquo; {}&amp;rdquo;  比如
+type TestObject struct { kind string `json:&amp;#34;kind&amp;#34;` id string `json:&amp;#34;id, omitempty&amp;#34;` name string `json:&amp;#34;name&amp;#34;` email string `json:&amp;#34;email&amp;#34;` } testObject := TestObject{ &amp;#34;TestObj&amp;#34;, &amp;#34;id&amp;#34;, &amp;#34;Your name&amp;#34;, &amp;#34;email@email.com&amp;#34; } fmt.Println(testObject) b, err := json.Marshal(testObject) fmt.Println(string(b[:])) 结果 ：
+{TestObject id Your name email@email.com} {} 原因：
+golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。
+正确方法：
+导出字段使用大写字母开头，如:
+type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `json:&amp;#34;id, omitempty&amp;#34;` Name string `json:&amp;#34;name&amp;#34;` Email string `json:&amp;#34;email&amp;#34;` } ​</description>
+    </item>
     
     <item>
       <title>clojure 笔记</title>

@@ -6,7 +6,9 @@
 
   
   <title>
-  Tags | Zack Blog
+  Tag → golang
+  
+   | Zack Blog
 </title>
 
   
@@ -31,7 +33,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zack Blog" />
   <meta property="og:description" content="" />
-  <meta property="og:url" content="http://www.kotlinor.com/tags/" />
+  <meta property="og:url" content="http://www.kotlinor.com/tags/golang/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
 
@@ -40,7 +42,7 @@
 <meta name="generator" content="Hugo 0.38.2" />
 
 
-<link rel="canonical" href="http://www.kotlinor.com/tags/" />
+<link rel="canonical" href="http://www.kotlinor.com/tags/golang/" />
 <link rel="alternative" href="http://www.kotlinor.com/index.xml" title="我的Blog" type="application/atom+xml" />
 
 
@@ -139,8 +141,6 @@
       
         <li class="menu-item
             
-              is-active
-            
             
             ">
             <a href="http://www.kotlinor.com/tags/">Tags</a>
@@ -202,83 +202,34 @@
   </nav>
 </header>
 
-  <section class="main post-detail terms-list">
-    <header class="post-header">
-      <h1 class="post-title">Tags</h1>
+  <section class="main post-list">
+    <header class="list-header offscreen">
+      <h2 class="list-label">Posts List</h2>
     </header>
-    <div class="tags-cloud">
+    
+    
       
+        <article class="post-entry">
+  <header class="post-header">
+    <h3 class="post-title"><a href="http://www.kotlinor.com/post/2018-04-27-golang-usage/" class="post-link">golang的坑</a></h3>
+    <p class="post-meta">@Zack · Apr 27, 2018 · 1 min read</p>
+  </header>
+  
+  <p class="post-summary">1. json.Marshal函数  返回空” {}”  比如
+type TestObject struct { kind string `json:&#34;kind&#34;` id string `json:&#34;id, omitempty&#34;` name string `json:&#34;name&#34;` email string `json:&#34;email&#34;` } testObject := TestObject{ &#34;TestObj&#34;, &#34;id&#34;, &#34;Your name&#34;, &#34;email@email.com&#34; } fmt.Println(testObject) b, err := json.Marshal(testObject) fmt.Println(string(b[:])) 结果 ：
+{TestObject id Your name email@email.com} {} 原因：
+golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。
+正确方法：
+导出字段使用大写字母开头，如:
+type TestObject struct { Kind string `json:&#34;kind&#34;` Id string `json:&#34;id, omitempty&#34;` Name string `json:&#34;name&#34;` Email string `json:&#34;email&#34;` } ​</p>
+  <footer class="post-footer">
+    <a class="read-more" href="http://www.kotlinor.com/post/2018-04-27-golang-usage/">Read More →</a>
+  </footer>
+</article>
+
       
-        
-        <a href="http://www.kotlinor.com/tags/python/" class="tag-xxl">python</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/emacs/" class="tag-m">emacs</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/spark/" class="tag-m">spark</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/spark-configuration/" class="tag-m">spark-configuration</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/%E4%BB%A3%E7%90%86/" class="tag-m">代理</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/ansible/" class="tag-s">ansible</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/clojure/" class="tag-s">clojure</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/datetime/" class="tag-s">datetime</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/docker/" class="tag-s">docker</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/elisp/" class="tag-s">elisp</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/exec/" class="tag-s">exec</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/gevent/" class="tag-s">gevent</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/golang/" class="tag-s">golang</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/hbase/" class="tag-s">hbase</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/linux/" class="tag-s">linux</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/lisp/" class="tag-s">lisp</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/mongodb/" class="tag-s">mongodb</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/proxy/" class="tag-s">proxy</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/relative-path/" class="tag-s">relative-path</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/requests/" class="tag-s">requests</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/spark-cluster/" class="tag-s">spark-cluster</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/swap/" class="tag-s">swap</a>
-      
-        
-        <a href="http://www.kotlinor.com/tags/%E7%88%AC%E8%99%AB/" class="tag-s">爬虫</a>
-      
-    </div>
+    
+    
   </section>
   <footer class="site-footer">
   <p>© 2017-2018 我的Blog</p>

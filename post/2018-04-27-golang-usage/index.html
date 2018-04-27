@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>golang的坑</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Zack" />
+  <meta name="description" content="1. json.Marshal函数  返回空&amp;rdquo; {}&amp;rdquo;  比如
+type TestObject struct { kind string `json:&amp;#34;kind&amp;#34;` id string `json:&amp;#34;id, omitempty&amp;#34;` name string `json:&amp;#34;name&amp;#34;` email string `json:&amp;#34;email&amp;#34;` } testObject := TestObject{ &amp;#34;TestObj&amp;#34;, &amp;#34;id&amp;#34;, &amp;#34;Your name&amp;#34;, &amp;#34;email@email.com&amp;#34; } fmt.Println(testObject) b, err := json.Marshal(testObject) fmt.Println(string(b[:])) 结果 ：
+{TestObject id Your name email@email.com} {} 原因：
+golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。
+正确方法：
+导出字段使用大写字母开头，如:
+type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `json:&amp;#34;id, omitempty&amp;#34;` Name string `json:&amp;#34;name&amp;#34;` Email string `json:&amp;#34;email&amp;#34;` } ​" />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="golang的坑" />
+    <meta name="twitter:description" content="1. json.Marshal函数  返回空&amp;rdquo; {}&amp;rdquo;  比如
+type TestObject struct { kind string `json:&amp;#34;kind&amp;#34;` id string `json:&amp;#34;id, omitempty&amp;#34;` name string `json:&amp;#34;name&amp;#34;` email string `json:&amp;#34;email&amp;#34;` } testObject := TestObject{ &amp;#34;TestObj&amp;#34;, &amp;#34;id&amp;#34;, &amp;#34;Your name&amp;#34;, &amp;#34;email@email.com&amp;#34; } fmt.Println(testObject) b, err := json.Marshal(testObject) fmt.Println(string(b[:])) 结果 ：
+{TestObject id Your name email@email.com} {} 原因：
+golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。
+正确方法：
+导出字段使用大写字母开头，如:
+type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `json:&amp;#34;id, omitempty&amp;#34;` Name string `json:&amp;#34;name&amp;#34;` Email string `json:&amp;#34;email&amp;#34;` } ​" />
+    <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="golang的坑" />
+  <meta property="og:description" content="1. json.Marshal函数  返回空&amp;rdquo; {}&amp;rdquo;  比如
+type TestObject struct { kind string `json:&amp;#34;kind&amp;#34;` id string `json:&amp;#34;id, omitempty&amp;#34;` name string `json:&amp;#34;name&amp;#34;` email string `json:&amp;#34;email&amp;#34;` } testObject := TestObject{ &amp;#34;TestObj&amp;#34;, &amp;#34;id&amp;#34;, &amp;#34;Your name&amp;#34;, &amp;#34;email@email.com&amp;#34; } fmt.Println(testObject) b, err := json.Marshal(testObject) fmt.Println(string(b[:])) 结果 ：
+{TestObject id Your name email@email.com} {} 原因：
+golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。
+正确方法：
+导出字段使用大写字母开头，如:
+type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `json:&amp;#34;id, omitempty&amp;#34;` Name string `json:&amp;#34;name&amp;#34;` Email string `json:&amp;#34;email&amp;#34;` } ​" />
+  <meta property="og:url" content="http://www.kotlinor.com/post/2018-04-27-golang-usage/" />
+  <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.38.2" />
+
+
+<link rel="canonical" href="http://www.kotlinor.com/post/2018-04-27-golang-usage/" />
+<link rel="alternative" href="http://www.kotlinor.com/index.xml" title="我的Blog" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+
+
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="我的Blog" />
+<meta name="msapplication-tooltip" content="我的Blog" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="http://www.kotlinor.com/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.kotlinor.com/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.kotlinor.com/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="http://www.kotlinor.com/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="http://www.kotlinor.com/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="http://www.kotlinor.com/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="http://www.kotlinor.com/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="http://www.kotlinor.com/images/logoko.png" alt="Avatar">
+  
+  <h2 class="title">我的Blog</h2>
+  
+  <p class="subtitle">~ Keep It Simple &amp; Stupid ~</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="http://www.kotlinor.com/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://github.com/ZackZK">Works</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://www.kotlinor.com/tags/">Tags</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="http://www.kotlinor.com/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">golang的坑</h1>
+      <p class="post-meta">@Zack · Apr 27, 2018 · 1 min read</p>
+    </header>
+    <article class="post-content">
+
+<h1 id="1-json-marshal函数">1. json.Marshal函数</h1>
+
+<ul>
+<li>返回空&rdquo; {}&rdquo;</li>
+</ul>
+
+<p>比如</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TestObject</span> <span style="color:#66d9ef">struct</span> {
+      <span style="color:#a6e22e">kind</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;kind&#34;`</span>
+      <span style="color:#a6e22e">id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id, omitempty&#34;`</span>
+      <span style="color:#a6e22e">name</span>  <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+      <span style="color:#a6e22e">email</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;email&#34;`</span>
+  }
+
+  <span style="color:#a6e22e">testObject</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">TestObject</span>{
+      <span style="color:#e6db74">&#34;TestObj&#34;</span>,
+      <span style="color:#e6db74">&#34;id&#34;</span>,
+      <span style="color:#e6db74">&#34;Your name&#34;</span>,
+      <span style="color:#e6db74">&#34;email@email.com&#34;</span>
+  }
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">testObject</span>)
+  <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">testObject</span>)
+  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">b</span>[:]))</code></pre></div>
+<p><strong>结果</strong> ：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Go" data-lang="Go">  {<span style="color:#a6e22e">TestObject</span> <span style="color:#a6e22e">id</span> <span style="color:#a6e22e">Your</span> <span style="color:#a6e22e">name</span> <span style="color:#a6e22e">email</span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">email</span>.<span style="color:#a6e22e">com</span>}
+  {}</code></pre></div>
+<p><strong>原因</strong>：</p>
+
+<p>golang中使用字母是否大写定义导出， encoding/json库会忽略非导出的字段。</p>
+
+<p>正确方法：</p>
+
+<p>导出字段使用大写字母开头，如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">  <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TestObject</span> <span style="color:#66d9ef">struct</span> {
+      <span style="color:#a6e22e">Kind</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;kind&#34;`</span>
+      <span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;id, omitempty&#34;`</span>
+      <span style="color:#a6e22e">Name</span>  <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+      <span style="color:#a6e22e">Email</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;email&#34;`</span>
+  }</code></pre></div>
+<p>​</p>
+
+<ul>
+<li>[]byte 类型字段的Marshal</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+     <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">foo</span> <span style="color:#66d9ef">struct</span> {
+        <span style="color:#a6e22e">Data</span> []<span style="color:#66d9ef">byte</span> <span style="color:#e6db74">`json:&#34;data&#34;`</span>
+     }
+
+     <span style="color:#a6e22e">bar</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">foo</span>{[]<span style="color:#66d9ef">byte</span>{<span style="color:#ae81ff">1</span>}}
+     <span style="color:#a6e22e">body</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#a6e22e">bar</span>)
+
+     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(string(<span style="color:#a6e22e">body</span>))
+  }</code></pre></div>
+<p>运行结果竟然是：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">  <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#e6db74">&#34;AQ==&#34;</span><span style="color:#f92672">}</span></code></pre></div>
+<p>golang Marshal文档上关于[]byte类型的说明：</p>
+
+<blockquote>
+<p>Array and slice values encode as <strong>JSON</strong> arrays, except that []<strong>byte</strong> encodes as a base64-encoded string.</p>
+</blockquote>
+
+<p>也就是说<em>[]byte</em> 类型作为base64的字符串进行encoding, 所以才出现上面奇怪的结果。</p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="http://www.kotlinor.com/tags/golang"><span class="tag">Golang</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        ©除非特殊说明，欢迎转载
+      </p>
+    </footer>
+    
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 我的Blog</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="http://www.kotlinor.com/js/bundle.js"></script>
+
+
+
+
+  </body>
+</html>
