@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>python 杂项记录</title>
+  <title>mysql数据库笔记</title>
 
   
   
@@ -16,22 +16,25 @@
 
   
   <meta name="author" content="Zack" />
-  <meta name="description" content="" />
+  <meta name="description" content="１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &amp;gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &amp;gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &amp;gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &amp;lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &amp;lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &amp;#34;Table structure&amp;#34; mydump." />
 
   
   
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@gohugoio" />
-    <meta name="twitter:title" content="python 杂项记录" />
-    <meta name="twitter:description" content="" />
+    <meta name="twitter:title" content="mysql数据库笔记" />
+    <meta name="twitter:description" content="１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &amp;gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &amp;gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &amp;gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &amp;lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &amp;lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &amp;#34;Table structure&amp;#34; mydump." />
     <meta name="twitter:image" content="http://www.kotlinor.com/img/avatar.jpg" />
   
 
   
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="python 杂项记录" />
-  <meta property="og:description" content="" />
-  <meta property="og:url" content="http://www.kotlinor.com/post/2016-08-26-python-misc/" />
+  <meta property="og:title" content="mysql数据库笔记" />
+  <meta property="og:description" content="１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &amp;gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &amp;gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &amp;gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &amp;lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &amp;lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &amp;#34;Table structure&amp;#34; mydump." />
+  <meta property="og:url" content="http://www.kotlinor.com/post/2018-05-27-mysql-operations/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
 
@@ -40,7 +43,7 @@
 <meta name="generator" content="Hugo 0.47.1" />
 
 
-<link rel="canonical" href="http://www.kotlinor.com/post/2016-08-26-python-misc/" />
+<link rel="canonical" href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/" />
 <link rel="alternative" href="http://www.kotlinor.com/index.xml" title="我的Blog" type="application/atom+xml" />
 
 
@@ -206,15 +209,51 @@
 
   <section class="main post-detail">
     <header class="post-header">
-      <h1 class="post-title">python 杂项记录</h1>
-      <p class="post-meta">@Zack · Aug 26, 2016 · 0 min read</p>
+      <h1 class="post-title">mysql数据库笔记</h1>
+      <p class="post-meta">@Zack · May 27, 2018 · 1 min read</p>
     </header>
-    <article class="post-content"></article>
+    <article class="post-content">
+
+<h1 id="１-数据库备份和恢复">１. 数据库备份和恢复</h1>
+
+<h2 id="数据备份">数据备份</h2>
+
+<ol>
+<li>备份整个数据库<br /></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">     $ mysqldump -u <span style="color:#f92672">[</span>uname<span style="color:#f92672">]</span> -p<span style="color:#f92672">[</span>pass<span style="color:#f92672">]</span> db_name &gt; db_backup.sql</code></pre></div>
+<ol>
+<li>备份指定表</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    $ mysqldump -u <span style="color:#f92672">[</span>uname<span style="color:#f92672">]</span> -p<span style="color:#f92672">[</span>pass<span style="color:#f92672">]</span> db_name table1 table2 &gt; table_backup.sql</code></pre></div>
+<ol>
+<li>备份压缩</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   $ mysqldump -u <span style="color:#f92672">[</span>uname<span style="color:#f92672">]</span> -p<span style="color:#f92672">[</span>pass<span style="color:#f92672">]</span> db_name | gzip &gt; db_backup.sql.gz</code></pre></div>
+<h2 id="数据恢复">数据恢复</h2>
+
+<ol>
+<li>恢复数据库</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   $ mysql -p -u<span style="color:#f92672">[</span>user<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>database<span style="color:#f92672">]</span> &lt; db_backup.dump</code></pre></div>
+<ol>
+<li>从恢复表</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   $ mysql -uroot -p DatabaseName &lt; path<span style="color:#ae81ff">\T</span>ableName.sql</code></pre></div>
+<ol>
+<li>从整个数据库备份中恢复某个表</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   $ grep -n <span style="color:#e6db74">&#34;Table structure&#34;</span> mydump.sql
+   <span style="color:#75715e"># identify the first and last line numbers (n1 and n2) of desired table
+</span><span style="color:#75715e"></span>   $ sed -n n1,n2p mydump.sql &gt; mytable.sql <span style="color:#75715e"># (e.g. sed -n 48,112p)
+</span><span style="color:#75715e"></span>   $ mysql -uroot -p DatabaseName &lt;mytable.sql</code></pre></div>
+<h2 id="dump数据库表创建sql">dump数据库表创建sql</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysqldump -d --compact --compatible<span style="color:#f92672">=</span>mysql323 <span style="color:#e6db74">${</span>dbname<span style="color:#e6db74">}</span>|egrep -v <span style="color:#e6db74">&#34;(^SET|^/\*\!)&#34;</span></code></pre></div></article>
     <footer class="post-footer">
       
       <ul class="post-tags">
         
-          <li><a href="http://www.kotlinor.com/tags/python"><span class="tag">Python</span></a></li>
+          <li><a href="http://www.kotlinor.com/tags/mysql"><span class="tag">Mysql</span></a></li>
         
       </ul>
       

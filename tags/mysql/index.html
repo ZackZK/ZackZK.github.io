@@ -6,7 +6,7 @@
 
   
   <title>
-  Tag → lisp
+  Tag → mysql
   
    | Zack Blog
 </title>
@@ -33,7 +33,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zack Blog" />
   <meta property="og:description" content="" />
-  <meta property="og:url" content="http://www.kotlinor.com/tags/lisp/" />
+  <meta property="og:url" content="http://www.kotlinor.com/tags/mysql/" />
   <meta property="og:image" content="http://www.kotlinor.com/img/avatar.jpg" />
 
 
@@ -42,7 +42,7 @@
 <meta name="generator" content="Hugo 0.47.1" />
 
 
-<link rel="canonical" href="http://www.kotlinor.com/tags/lisp/" />
+<link rel="canonical" href="http://www.kotlinor.com/tags/mysql/" />
 <link rel="alternative" href="http://www.kotlinor.com/index.xml" title="我的Blog" type="application/atom+xml" />
 
 
@@ -211,14 +211,14 @@
       
         <article class="post-entry">
   <header class="post-header">
-    <h3 class="post-title"><a href="http://www.kotlinor.com/post/2016-11-26-clojure-note/" class="post-link">clojure 笔记</a></h3>
-    <p class="post-meta">@Zack · Nov 26, 2016 · 1 min read</p>
+    <h3 class="post-title"><a href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/" class="post-link">mysql数据库笔记</a></h3>
+    <p class="post-meta">@Zack · May 27, 2018 · 1 min read</p>
   </header>
   
-  <p class="post-summary"> clojure修改maven repo的方法 使用国内clojure maven repo Maven官方库经常非常慢，阿里云也提供maven库镜像，可以在project.clj中添加下面配置使用阿里云repo：
-:mirrors {&#34;central&#34; {:name &#34;central&#34; :url &#34;http://maven.aliyun.com/nexus/content/groups/public/&#34;}} </p>
+  <p class="post-summary">１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &#34;Table structure&#34; mydump.</p>
   <footer class="post-footer">
-    <a class="read-more" href="http://www.kotlinor.com/post/2016-11-26-clojure-note/">Read More →</a>
+    <a class="read-more" href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/">Read More →</a>
   </footer>
 </article>
 

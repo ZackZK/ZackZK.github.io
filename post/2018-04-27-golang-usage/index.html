@@ -55,7 +55,7 @@ type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `js
 
 
 
-<meta name="generator" content="Hugo 0.38.2" />
+<meta name="generator" content="Hugo 0.47.1" />
 
 
 <link rel="canonical" href="http://www.kotlinor.com/post/2018-04-27-golang-usage/" />
@@ -292,6 +292,17 @@ type TestObject struct { Kind string `json:&amp;#34;kind&amp;#34;` Id string `js
 </blockquote>
 
 <p>也就是说<em>[]byte</em> 类型作为base64的字符串进行encoding, 所以才出现上面奇怪的结果。</p>
+
+<h1 id="2-slice操作">2. slice操作</h1>
+
+<h2 id="2-1-append-string-to-byte-slice">2.1 Append string to byte slice</h2>
+
+<p>You can append a string <code>s</code> to a byte slice using the <code>s...</code> notation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">buf</span> []<span style="color:#66d9ef">byte</span>
+<span style="color:#a6e22e">buf</span> = append(<span style="color:#a6e22e">buf</span>, <span style="color:#e6db74">&#39;a&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>)
+<span style="color:#a6e22e">buf</span> = append(<span style="color:#a6e22e">buf</span>, <span style="color:#e6db74">&#34;cd&#34;</span><span style="color:#f92672">...</span>)
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">buf</span>) <span style="color:#f92672">//</span> [<span style="color:#ae81ff">97</span> <span style="color:#ae81ff">98</span> <span style="color:#ae81ff">99</span> <span style="color:#ae81ff">100</span>]</code></pre></div>
+<h1 id="3-字符串操作">3. 字符串操作</h1>
 </article>
     <footer class="post-footer">
       

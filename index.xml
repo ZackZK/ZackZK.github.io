@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©除非特殊说明，欢迎转载</copyright>
-    <lastBuildDate>Fri, 27 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://www.kotlinor.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>mysql数据库笔记</title>
+      <link>http://www.kotlinor.com/post/2018-05-27-mysql-operations/</link>
+      <pubDate>Sun, 27 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.kotlinor.com/post/2018-05-27-mysql-operations/</guid>
+      <description>１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &amp;gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &amp;gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &amp;gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &amp;lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &amp;lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &amp;#34;Table structure&amp;#34; mydump.</description>
+    </item>
     
     <item>
       <title>golang的坑</title>

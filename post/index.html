@@ -40,7 +40,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.38.2" />
+<meta name="generator" content="Hugo 0.47.1" />
 
 
 <link rel="canonical" href="http://www.kotlinor.com/post/" />
@@ -214,6 +214,20 @@
       
         <article class="post-entry">
   <header class="post-header">
+    <h3 class="post-title"><a href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/" class="post-link">mysql数据库笔记</a></h3>
+    <p class="post-meta">@Zack · May 27, 2018 · 1 min read</p>
+  </header>
+  
+  <p class="post-summary">１. 数据库备份和恢复 数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &#34;Table structure&#34; mydump.</p>
+  <footer class="post-footer">
+    <a class="read-more" href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/">Read More →</a>
+  </footer>
+</article>
+
+      
+        <article class="post-entry">
+  <header class="post-header">
     <h3 class="post-title"><a href="http://www.kotlinor.com/post/2018-04-27-golang-usage/" class="post-link">golang的坑</a></h3>
     <p class="post-meta">@Zack · Apr 27, 2018 · 1 min read</p>
   </header>
@@ -354,22 +368,6 @@ import requests r = requests.get(&#39;https://api.github.com/events&#39;) r.json
 data = {&#34;is_funda_search&#34;:&#34;0&#34;, &#34;fundavolume&#34;:&#34;100&#34;, &#34;amarket[]&#34;:[&#34;sh&#34;, &#34;sz&#34;], &#34;coupon_descr[]&#34;: [&#34;&#43;3.0%&#34;, &#34;&#43;3.2%&#34;, &#34;&#43;3.5%&#34;, &#34;&#43;4.0%&#34;, &#34;other&#34;], &#34;rp&#34;:&#34;50&#34;, &#34;maturity&#34;:&#34;&#34;} content = s.post(url, data=data)</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2016-01-21-python-requests-spider/">Read More →</a>
-  </footer>
-</article>
-
-      
-        <article class="post-entry">
-  <header class="post-header">
-    <h3 class="post-title"><a href="http://www.kotlinor.com/post/2015-09-11-spark-load-hbase/" class="post-link">spark读取hbase内容及在集群环境下的配置</a></h3>
-    <p class="post-meta">@Zack · Sep 11, 2015 · 4 min read</p>
-  </header>
-  
-  <p class="post-summary">spark读取hbase 对于读取hbase，spark提供了newAPIHadoopRDD接口可以很方便的读取hbase内容。下面是一个具体的例子：
-首先，加入下面依赖：
-&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.spark&lt;/groupId&gt; &lt;artifactId&gt;spark-core_2.10&lt;/artifactId&gt; &lt;version&gt;1.4.1&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt; &lt;artifactId&gt;hbase-common&lt;/artifactId&gt; &lt;version&gt;1.1.2&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt; &lt;artifactId&gt;hbase-client&lt;/artifactId&gt; &lt;version&gt;1.1.2&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt; &lt;artifactId&gt;hbase-server&lt;/artifactId&gt; &lt;version&gt;1.1.2&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt; 下面的例子从hbase数据库中读取数据，并进行RDD操作，生成两两组合。
-import org.apache.hadoop.hbase.HBaseConfiguration; import org.apache.hadoop.hbase.util.Base64; import org.apache.hadoop.hbase.util.Bytes; import org.apache.spark.api.java.JavaSparkContext; import org.apache.spark.api.java.JavaRDD; import org.apache.spark.SparkConf; import org.apache.spark.api.java.function.Function; import org.apache.spark.api.java.function.Function2; import org.apache.hadoop.conf.Configuration; import org.apache.hadoop.hbase.client.Scan; import org.apache.hadoop.hbase.client.Result; import org.apache.hadoop.hbase.io.ImmutableBytesWritable; import org.apache.hadoop.hbase.mapreduce.TableInputFormat; import org.apache.spark.api.java.JavaPairRDD; import org.apache.hadoop.hbase.protobuf.ProtobufUtil; import org.apache.hadoop.hbase.protobuf.generated.ClientProtos; import org.apache.spark.api.java.function.PairFunction; import scala.Tuple10; import scala.Tuple2; import java.io.IOException; import java.util.ArrayList; import java.</p>
-  <footer class="post-footer">
-    <a class="read-more" href="http://www.kotlinor.com/post/2015-09-11-spark-load-hbase/">Read More →</a>
   </footer>
 </article>
 
