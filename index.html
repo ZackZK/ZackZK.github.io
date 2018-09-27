@@ -211,8 +211,10 @@
     <p class="post-meta">@Zack · May 27, 2018 · 1 min read</p>
   </header>
   
-  <p class="post-summary">１. 数据库备份和恢复 数据备份  备份整个数据库
-  $ mysqldump -u [uname] -p[pass] db_name &gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &gt; db_backup.sql.gz 数据恢复  恢复数据库  $ mysql -p -u[user] [database] &lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &#34;Table structure&#34; mydump.</p>
+  <p class="post-summary">##数据库备份和恢复
+数据备份  备份整个数据库
+  $ mysqldump -u [uname] -p[pass] db_name &gt; db_backup.sql  备份指定表  $ mysqldump -u [uname] -p[pass] db_name table1 table2 &gt; table_backup.sql  备份压缩  $ mysqldump -u [uname] -p[pass] db_name | gzip &gt; db_backup.sql.gz ###数据恢复
+ 恢复数据库  $ mysql -p -u[user] [database] &lt; db_backup.dump  从恢复表  $ mysql -uroot -p DatabaseName &lt; path\TableName.sql  从整个数据库备份中恢复某个表  $ grep -n &#34;Table structure&#34; mydump.</p>
   <footer class="post-footer">
     <a class="read-more" href="http://www.kotlinor.com/post/2018-05-27-mysql-operations/">Read More →</a>
   </footer>
